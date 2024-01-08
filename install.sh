@@ -85,6 +85,7 @@ cd -
 
 echo '==================5.构建镜像并启动网关(gateway)相关服务==============='
 #构建镜像:网关服务
+echo '====构建镜像:网关服务===='
 cd ./gateway/gateway-web
 mvn package && mvn docker:build
 
@@ -92,6 +93,7 @@ mvn package && mvn docker:build
 cd -
 
 #构建镜像:网关管理服务
+echo '====构建镜像:网关管理服务===='
 cd ./gateway/gateway-admin
 mvn package && mvn docker:build
 
