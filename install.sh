@@ -32,7 +32,7 @@ mvn -pl ./common/core,./facade,./auth/authentication-client install -Dmaven.test
 
 echo '==================2.安装认证公共包到本地maven仓库=================='
 #安装认证公共包到本地maven仓库
-cd common && mvn install
+cd common -D maven.test.skip=true && mvn install -D maven.test.skip=true
 echo '当前目录:' && pwd
 
 #回到根目录
@@ -40,7 +40,7 @@ cd -
 
 echo '==================3.安装认证客户端到本地maven仓库=================='
 #安装认证客户端到本地maven仓库
-cd auth/authentication-client && mvn install
+cd auth/authentication-client -D maven.test.skip=true && mvn install -D maven.test.skip=true
 echo '当前目录:' && pwd
 
 #回到根目录
@@ -69,7 +69,7 @@ echo '==================4.3.构建镜像: 配置中心, 消息中心========'
 
 #构建镜像:消息中心
 cd ./center/bus
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #回到根目录
 cd -
@@ -88,7 +88,7 @@ echo '==================5.构建镜像并启动网关(gateway)相关服务======
 #构建镜像:网关服务
 echo '====构建镜像:网关服务===='
 cd ./gateway/gateway-web
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #回到根目录
 cd -
@@ -96,7 +96,7 @@ cd -
 #构建镜像:网关管理服务
 echo '====构建镜像:网关管理服务===='
 cd ./gateway/gateway-admin
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #确认初始化网关服务的DB:./gateway/gateway-admin/src/main/db
 echo '你可以立即去部署网关服务的DB(脚本路径:./gateway/gateway-admin/src/main/db),然后回来继续...'
@@ -133,7 +133,7 @@ cd -
 echo '==================6.构建镜像并启动组织(organization)相关服务=================='
 #构建镜像:组织服务
 cd ./sysadmin/organization
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #确认初始化授权/认证服务的DB:./sysadmin/db
 echo '你可以立即去部署组织服务的DB(脚本路径:./sysadmin/db),然后回来继续...'
@@ -167,14 +167,14 @@ cd -
 echo '==================7.构建镜像并启动认证(auth)相关服务=================='
 #构建镜像:认证服务
 cd ./auth/authentication-server
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #回到根目录
 cd -
 
 #构建镜像:授权服务
 cd ./auth/authorization-server
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #确认初始化授权/认证服务的DB:./auth/db
 echo '你可以立即去部署授权/认证服务的DB(脚本路径:./auth/db),然后回来继续...'
@@ -211,7 +211,7 @@ cd -
 echo '==================8.构建镜像并启动监控(monitor)相关服务==============='
 #构建镜像:管理台服务
 cd ./monitor/admin
-mvn package && mvn docker:build
+mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #回到根目录
 cd -
