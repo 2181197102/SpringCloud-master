@@ -199,7 +199,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>1.18.30</version>
             <scope>compile</scope>
         </dependency>
         <!--测试框架-->
@@ -226,7 +226,7 @@
                     <execution>
                         <goals>
                             <goal>build-info</goal>
-                            <goal>repackage</goal>
+<!--                            <goal>repackage</goal>-->
                         </goals>
                     </execution>
                 </executions>
