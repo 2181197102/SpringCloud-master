@@ -11,7 +11,7 @@ services:
     networks:
       - sc-net
     ports:
-      - 6379:6379
+      - "6379:6379"
     env_file: .env
 
   rabbitmq:
@@ -23,8 +23,8 @@ services:
     networks:
       - sc-net
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     env_file: .env
 
   mysql:
@@ -34,7 +34,7 @@ services:
     networks:
       - sc-net
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ../data/mysql:/var/lib/mysql
     environment:

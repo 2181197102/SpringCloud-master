@@ -8,7 +8,7 @@ services:
     networks:
       - sc-net
     ports:
-      - 8022:8022
+      - "8022:8022"
     env_file: .env
     environment:
       TZ: Asia/Shanghai
@@ -20,5 +20,5 @@ services:
     networks:
       - sc-net
     ports:
-      - 8021:8021
+      - "8021:8021"
     env_file: .env
