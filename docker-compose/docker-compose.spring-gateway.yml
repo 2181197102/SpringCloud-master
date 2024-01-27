@@ -2,7 +2,7 @@ version: '3'
 services:
   #网关服务
   gateway-web:
-    image: cike/gateway-web:latest
+    image: transcodegroup/gateway-web:24.1.15
     container_name: sc-gateway-web
     restart: always
     networks:
