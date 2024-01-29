@@ -6,8 +6,8 @@ services:
     restart: always
     volumes:
       - ../data/redis:/data
-    environment:
-      - REDIS_PASSWORD=123456
+#    environment:
+#      - REDIS_PASSWORD=123456
     networks:
       - sc-net
     ports:
