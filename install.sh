@@ -99,21 +99,21 @@ cd ./gateway/gateway-admin
 mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #确认初始化网关服务的DB:./gateway/gateway-admin/src/main/db
-echo '你可以立即去部署网关服务的DB(脚本路径:./gateway/gateway-admin/src/main/db),然后回来继续...'
-read -r -p "确认网关服务的DB部署好了吗? [Y/n] " gwDbConfirm
-case $gwDbConfirm in
-    [yY][eE][sS]|[yY])
-		echo "Yes 继续执行"
-		;;
-    [nN][oO]|[nN])
-		echo "No 终止执行"
-		exit 1
-       	;;
-    *)
-		echo "Invalid input... 终止执行"
-		exit 1
-		;;
-esac
+#echo '你可以立即去部署网关服务的DB(脚本路径:./gateway/gateway-admin/src/main/db),然后回来继续...'
+#read -r -p "确认网关服务的DB部署好了吗? [Y/n] " gwDbConfirm
+#case $gwDbConfirm in
+#    [yY][eE][sS]|[yY])
+#		echo "Yes 继续执行"
+#		;;
+#    [nN][oO]|[nN])
+#		echo "No 终止执行"
+#		exit 1
+#       	;;
+#    *)
+#		echo "Invalid input... 终止执行"
+#		exit 1
+#		;;
+#esac
 
 #回到根目录
 cd -
@@ -136,21 +136,21 @@ cd ./sysadmin/organization
 mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #确认初始化授权/认证服务的DB:./sysadmin/db
-echo '你可以立即去部署组织服务的DB(脚本路径:./sysadmin/db),然后回来继续...'
-read -r -p "确认部署组织服务的DB部署好了吗? [Y/n] " orgDbConfirm
-case $orgDbConfirm in
-    [yY][eE][sS]|[yY])
-		echo "Yes 继续执行"
-		;;
-    [nN][oO]|[nN])
-		echo "No 终止执行"
-		exit 1
-       	;;
-    *)
-		echo "Invalid input... 终止执行"
-		exit 1
-		;;
-esac
+#echo '你可以立即去部署组织服务的DB(脚本路径:./sysadmin/db),然后回来继续...'
+#read -r -p "确认部署组织服务的DB部署好了吗? [Y/n] " orgDbConfirm
+#case $orgDbConfirm in
+#    [yY][eE][sS]|[yY])
+#		echo "Yes 继续执行"
+#		;;
+#    [nN][oO]|[nN])
+#		echo "No 终止执行"
+#		exit 1
+#       	;;
+#    *)
+#		echo "Invalid input... 终止执行"
+#		exit 1
+#		;;
+#esac
 
 #回到根目录
 cd -
@@ -177,21 +177,21 @@ cd ./auth/authorization-server
 mvn package -D maven.test.skip=true && mvn docker:build -D maven.test.skip=true
 
 #确认初始化授权/认证服务的DB:./auth/db
-echo '你可以立即去部署授权/认证服务的DB(脚本路径:./auth/db),然后回来继续...'
-read -r -p "确认部署授权/认证服务的DB部署好了吗? [Y/n] " authDbConfirm
-case $authDbConfirm in
-    [yY][eE][sS]|[yY])
-		echo "Yes 继续执行"
-		;;
-    [nN][oO]|[nN])
-		echo "No 终止执行"
-		exit 1
-       	;;
-    *)
-		echo "Invalid input... 终止执行"
-		exit 1
-		;;
-esac
+#echo '你可以立即去部署授权/认证服务的DB(脚本路径:./auth/db),然后回来继续...'
+#read -r -p "确认部署授权/认证服务的DB部署好了吗? [Y/n] " authDbConfirm
+#case $authDbConfirm in
+#    [yY][eE][sS]|[yY])
+#		echo "Yes 继续执行"
+#		;;
+#    [nN][oO]|[nN])
+#		echo "No 终止执行"
+#		exit 1
+#       	;;
+#    *)
+#		echo "Invalid input... 终止执行"
+#		exit 1
+#		;;
+#esac
 
 #回到根目录
 cd -
