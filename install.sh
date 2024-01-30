@@ -21,8 +21,8 @@ esac
 
 echo '==================1.3清理当前脚本启动的容器和产生的镜像(可选的)=============='
 #清理当前脚本启动的容器和产生的镜像(可选的)
-docker stop sc-rabbitmq sc-redis sc-mysql
-docker rm sc-rabbitmq sc-redis sc-mysql
+#docker stop sc-rabbitmq sc-redis sc-mysql
+#docker rm sc-rabbitmq sc-redis sc-mysql
 #docker image rm rabbitmq:alpine redis:alpine mysql:9.6-alpine
 
 docker stop sc-monitor-admin sc-authorization-server sc-authentication-server sc-organization sc-gateway-admin sc-gateway-web
