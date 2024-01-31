@@ -15,7 +15,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:localhost}:${DATASOURCE_PORT:3306}/sc_gateway?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
-#    TODO add all jdbc url
+#    already down TODO add all jdbc url
     username: ${DATASOURCE_USERNAME:root}
     password: ${DATASOURCE_PASSWORD:root123}
 
