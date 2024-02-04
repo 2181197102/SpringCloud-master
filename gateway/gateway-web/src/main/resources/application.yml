@@ -44,8 +44,8 @@ spring:
             key-resolver: "#{@apiKeyResolver}" #SPEL表达式去的对应的bean
 
 feign:
-  sentinel:
-    enabled: true
+#  sentinel:
+#    enabled: true
   okhttp:
     enabled: true
 

@@ -43,8 +43,8 @@ logging:
     max-size: 1GB
 
 feign:
-  sentinel:
-    enabled: true
+#  sentinel:
+#    enabled: true
   okhttp:
     enabled: true
 
