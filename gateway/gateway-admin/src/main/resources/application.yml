@@ -58,7 +58,9 @@ management:
     web:
       exposure:
         include: '*'
-
+  endpoint:
+    health:
+      show-details: always
 logging:
   level:
     com.springboot.cloud.gateway: debug
