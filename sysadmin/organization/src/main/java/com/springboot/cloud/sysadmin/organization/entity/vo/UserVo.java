@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserVo extends BaseVo<User> {
 
-    public UserVo(User user) {
+    public UserVo(User user) { // 这个构造函数接受一个User对象作为参数，并将其属性拷贝到当前对象中。
         BeanUtils.copyProperties(user, this);
     }
 
