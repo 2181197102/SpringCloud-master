@@ -21,4 +21,7 @@ public class UserQueryParam extends BaseParam<User> {
     private String name;
     private String mobile;
     private String username;
+
+    // 新增用于查询用户类型
+    private Integer usertype;
 }

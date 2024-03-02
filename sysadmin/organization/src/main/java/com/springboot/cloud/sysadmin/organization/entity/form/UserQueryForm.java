@@ -32,4 +32,8 @@ public class UserQueryForm extends BaseQueryForm<UserQueryParam> {
     @Past(message = "查询结束时间必须小于当前日期")
     @ApiModelProperty(value = "查询结束时间")
     private Date createdTimeEnd;
+
+    // 新增字段
+    @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
+    private Integer usertype;
 }

@@ -99,12 +99,29 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
 
     @Override
     public IPage<UserVo> query(Page page, UserQueryParam userQueryParam) {
-        QueryWrapper<User> queryWrapper = userQueryParam.build();
-        queryWrapper.eq(StringUtils.isNotBlank(userQueryParam.getName()), "name", userQueryParam.getName());
-        queryWrapper.eq(StringUtils.isNotBlank(userQueryParam.getUsername()), "username", userQueryParam.getUsername());
-        queryWrapper.eq(StringUtils.isNotBlank(userQueryParam.getMobile()), "mobile", userQueryParam.getMobile());
-        // 转换成VO
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        // 检查非空字段并将它们作为查询条件
+        if (StringUtils.isNotBlank(userQueryParam.getName())) {
+            queryWrapper.eq("name", userQueryParam.getName());
+        }
+        if (StringUtils.isNotBlank(userQueryParam.getUsername())) {
+            queryWrapper.eq("username", userQueryParam.getUsername());
+        }
+        if (StringUtils.isNotBlank(userQueryParam.getMobile())) {
+            queryWrapper.eq("mobile", userQueryParam.getMobile());
+        }
+        // 这里添加了usertype作为查询条件
+        if (userQueryParam.getUsertype() != null) {
+            queryWrapper.eq("usertype", userQueryParam.getUsertype());
+        }
+        // 执行查询
         IPage<User> iPageUser = this.page(page, queryWrapper);
-        return iPageUser.convert(UserVo::new);
+        // 将User实体转换为UserVo
+        IPage<UserVo> iPageUserVo = iPageUser.convert(user -> {
+            UserVo userVo = new UserVo(user);
+            userVo.setRoleIds(userRoleService.queryByUserId(user.getId()));
+            return userVo;
+        });
+        return iPageUserVo;
     }
 }

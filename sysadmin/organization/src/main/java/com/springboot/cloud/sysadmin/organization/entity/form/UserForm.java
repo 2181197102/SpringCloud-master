@@ -61,4 +61,12 @@ public class UserForm extends BaseForm<User> {
 
     @ApiModelProperty(value = "用户账号是否被锁定，true为未锁定")
     private Boolean accountNonLocked = true;
+
+    // 新增字段
+    @ApiModelProperty(value = "用户身份附件")
+    private String attach;
+
+    // 新增字段
+    @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
+    private Integer usertype;
 }
