@@ -100,8 +100,8 @@ CREATE TABLE users
     id                      VARCHAR(20) PRIMARY KEY COMMENT '用户id',
     username                VARCHAR(100) NOT NULL COMMENT '用户名',
     password                VARCHAR(100) NOT NULL COMMENT '用户密码密文',
-    name                    VARCHAR(200) COMMENT '用户姓名',
-    mobile                  VARCHAR(20) COMMENT '用户手机',
+    name                    VARCHAR(200) NOT NULL COMMENT '用户姓名',
+    mobile                  VARCHAR(20) NOT NULL COMMENT '用户手机',
     description             VARCHAR(500) COMMENT '简介',
     deleted                 VARCHAR(1)   NOT NULL DEFAULT 'N' COMMENT '是否已删除Y：已删除，N：未删除',
     enabled                 BOOLEAN COMMENT '是否有效用户',
@@ -135,8 +135,8 @@ CREATE TABLE roles
 ) COMMENT '角色表';
 
 -- 应用表
-DROP TABLE IF EXISTS application;
-CREATE TABLE application
+DROP TABLE IF EXISTS applications;
+CREATE TABLE applications
 (
     id                      VARCHAR(20) PRIMARY KEY COMMENT '应用id',
     appname                 VARCHAR(100) NOT NULL COMMENT '应用名称',
@@ -147,7 +147,7 @@ CREATE TABLE application
     created_by              VARCHAR(100) NOT NULL COMMENT '创建人',
     updated_by              VARCHAR(100) NOT NULL COMMENT '更新人'
 ) COMMENT '应用表';
-CREATE UNIQUE INDEX ux_application_appname ON application (appname);
+CREATE UNIQUE INDEX ux_application_appname ON applications (appname);
 
 -- 应用权限表
 DROP TABLE IF EXISTS user_application_permission;
@@ -161,7 +161,7 @@ CREATE TABLE user_application_permission
     created_by     VARCHAR(100) NOT NULL COMMENT '创建人',
     updated_by     VARCHAR(100) NOT NULL COMMENT '更新人',
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (application_id) REFERENCES application(id),
+    FOREIGN KEY (application_id) REFERENCES applications(id),
     UNIQUE INDEX ux_user_application (user_id, application_id)
 ) COMMENT '用户应用权限表';
 
@@ -225,7 +225,7 @@ VALUES (101, 'admin', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624
        (104, 'testuser2', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
         'user2', 12345678901, now(), now(), 'system', 'system');
 -- 应用
-INSERT INTO application
+INSERT INTO applications
 (id, appname, description, app_icon, created_time, updated_time, created_by, updated_by)
 VALUES
     ('1', 'app1', '这是一个示例应用程序。', 'http://example.com/icon1.png', now(), now(), 'admin', 'admin'),
