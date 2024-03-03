@@ -74,7 +74,10 @@ public class UserController {
     }
 
     @ApiOperation(value = "修改用户", notes = "修改指定用户信息")
-    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "string"), @ApiImplicitParam(name = "userUpdateForm", value = "用户实体", required = true, dataType = "UserUpdateForm")})
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "string"),
+            @ApiImplicitParam(name = "userUpdateForm", value = "用户实体", required = true, dataType = "UserUpdateForm")
+    })
     @PutMapping(value = "/{id}")
     public Result update(@PathVariable String id, @Valid @RequestBody UserUpdateForm userUpdateForm) {
         User user = userUpdateForm.toPo(User.class);
