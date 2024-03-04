@@ -44,7 +44,7 @@ public interface IApplicationService {
      *
      * @return
      */
-// TODO     List<Application> query(String userId);
+    List<Application> query(String userId);
 
     /**
      * 更新应用信息

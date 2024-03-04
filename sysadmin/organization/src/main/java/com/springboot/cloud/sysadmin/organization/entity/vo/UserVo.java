@@ -31,4 +31,7 @@ public class UserVo extends BaseVo<User> {
     // 新增字段
     private String attach; // 用户身份附件，与User实体中的定义相同，用于在视图层展示。
     private String usertype; // 用户身份类型，与User实体中的定义相同，用于在视图层展示。
+
+    // 新增字段
+    private Set<String> applicationIds; // 用户所属的应用ID集合，用于在视图层展示。
 }

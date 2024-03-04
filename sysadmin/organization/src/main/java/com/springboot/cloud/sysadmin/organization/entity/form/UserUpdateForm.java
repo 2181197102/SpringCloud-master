@@ -52,4 +52,8 @@ public class UserUpdateForm extends BaseForm<User> {
     // 新增字段
     @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
     private String usertype = "0";
+
+    // 新增字段
+    @ApiModelProperty(value = "用户拥有的应用id列表")
+    private Set<String> applicationIds;
 }

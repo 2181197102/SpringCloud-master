@@ -12,6 +12,7 @@ import com.springboot.cloud.sysadmin.organization.entity.param.UserQueryParam;
 import com.springboot.cloud.sysadmin.organization.entity.po.User;
 import com.springboot.cloud.sysadmin.organization.entity.vo.UserVo;
 import com.springboot.cloud.sysadmin.organization.exception.UserNotFoundException;
+import com.springboot.cloud.sysadmin.organization.service.IUserApplicationService;
 import com.springboot.cloud.sysadmin.organization.service.IUserRoleService;
 import com.springboot.cloud.sysadmin.organization.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,9 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     @Autowired
     private IUserRoleService userRoleService;
 
+    @Autowired
+    private IUserApplicationService userApplicationService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -48,6 +52,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
             user.setPassword(passwordEncoder().encode(user.getPassword()));
         boolean inserts = this.save(user);
         userRoleService.saveBatch(user.getId(), user.getRoleIds());
+        userApplicationService.saveBatch(user.getId(), user.getApplicationIds());
         return inserts;
     }
 
@@ -56,8 +61,17 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     @CacheInvalidate(name = "user::", key = "#id")  // @CacheInvalidate是JetCache提供的一个注解，用于标注在方法上，表示该方法执行后会清除指定的缓存。
                                                     // 它可以用来清除指定缓存的数据，以确保下次访问时能够重新加载最新的数据。
     public boolean delete(String id) {
+        // 删除用户基本信息
         this.removeById(id);
-        return userRoleService.removeByUserId(id);
+
+        // 删除用户角色关联信息
+        boolean removedRoles = userRoleService.removeByUserId(id);
+
+        // 删除用户应用数据
+        boolean removedApplications = userApplicationService.removeByUserId(id); // 假设这是对应的方法
+
+        // 确保所有操作都成功执行
+        return removedRoles && removedApplications;
     }
 
     @Override
@@ -68,6 +82,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
             user.setPassword(passwordEncoder().encode(user.getPassword()));
         boolean isSuccess = this.updateById(user);
         userRoleService.saveBatch(user.getId(), user.getRoleIds());
+        userApplicationService.saveBatch(user.getId(), user.getApplicationIds());
         return isSuccess;
     }
 
@@ -80,6 +95,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
             throw new UserNotFoundException("user not found with id:" + id);
         }
         user.setRoleIds(userRoleService.queryByUserId(id));
+        user.setApplicationIds(userApplicationService.queryByUserId(id));
         return new UserVo(user);
     }
 
@@ -94,6 +110,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
             throw new UserNotFoundException("user not found with uniqueId:" + uniqueId);
         }
         user.setRoleIds(userRoleService.queryByUserId(user.getId()));
+        user.setApplicationIds(userApplicationService.queryByUserId(user.getId()));
         return user;
     }
 
@@ -120,6 +137,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
         IPage<UserVo> iPageUserVo = iPageUser.convert(user -> {
             UserVo userVo = new UserVo(user);
             userVo.setRoleIds(userRoleService.queryByUserId(user.getId()));
+            userVo.setApplicationIds(userApplicationService.queryByUserId(user.getId()));
             return userVo;
         });
         return iPageUserVo;

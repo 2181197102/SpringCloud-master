@@ -47,4 +47,8 @@ public class User extends BasePo {
     // 新增字段
     private String usertype; // 用户身份，0为其他，1为医护人员等。使用整型存储，便于在数据库中进行查询和索引。
 
+    // 新增字段
+    @TableField(exist = false)
+    private Set<String> applicationIds;
+
 }

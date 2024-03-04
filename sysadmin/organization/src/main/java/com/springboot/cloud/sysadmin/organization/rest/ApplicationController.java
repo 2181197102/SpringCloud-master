@@ -77,4 +77,15 @@ public class ApplicationController {
             return Result.success(applicationService.query(applicationQueryForm.getPage(), applicationQueryForm.toParam(ApplicationQueryParam.class)));
         }
 
+        @ApiOperation(value = "查询应用", notes = "根据用户id查询用户可使用的应用")
+        @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "path")
+        @ApiResponses(
+                @ApiResponse(code = 200, message = "处理成功", response = Result.class)
+        )
+        @GetMapping(value = "/user/{userId}")
+        public Result query(@PathVariable String userId) {
+            log.debug("query with userId:{}", userId);
+            return Result.success(applicationService.query(userId));
+        }
+
 }

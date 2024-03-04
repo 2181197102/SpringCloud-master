@@ -70,4 +70,8 @@ public class UserForm extends BaseForm<User> {
     @NotBlank(message = "用户类型不能为空")
     @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
     private String usertype = "0";
+
+    // 新增字段
+    @ApiModelProperty(value = "用户拥有的角色id列表")
+    private Set<String> applicationIds;
 }

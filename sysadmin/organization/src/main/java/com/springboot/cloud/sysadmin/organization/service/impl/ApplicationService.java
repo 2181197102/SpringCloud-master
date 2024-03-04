@@ -15,16 +15,21 @@ import com.springboot.cloud.sysadmin.organization.exception.ApplicationNotFoundE
 import com.springboot.cloud.sysadmin.organization.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Service
 @Slf4j
 public class ApplicationService extends ServiceImpl<ApplicationMapper, Application> implements IApplicationService {
+
+    @Autowired
+    private IUserApplicationService userApplicationService;
 
     @Override
     @Cached(name = "application::", key = "#id", cacheType = CacheType.BOTH)   // @Cached是JetCache提供的一个注解，用于标注在方法上，表示该方法的返回值会被缓存。
@@ -34,7 +39,6 @@ public class ApplicationService extends ServiceImpl<ApplicationMapper, Applicati
         if (Objects.isNull(application)) {
             throw new ApplicationNotFoundException("application not found with id:" + id);
         }
-        // TODO application.setUserIds(userApplicationService.queryByUserId(id));
         return new ApplicationVo(application);
     }
 
@@ -56,13 +60,12 @@ public class ApplicationService extends ServiceImpl<ApplicationMapper, Applicati
         return this.page(page, queryWrapper);
     }
 
-// TODO 根据用户id查询用户可使用的应用
-/*    @Override
-    @Cached(name = "role4user::", key = "#userId", cacheType = CacheType.BOTH)
-    public List<Role> query(String userId) {
-        Set<String> roleIds = userApplicationService.queryByUserId(userId);
-        return (List<Role>) this.listByIds(roleIds);
-    }*/
+    @Override
+    @Cached(name = "application4user::", key = "#userId", cacheType = CacheType.BOTH)
+    public List<Application> query(String userId) {
+        Set<String> applicationIds = userApplicationService.queryByUserId(userId);
+        return (List<Application>) this.listByIds(applicationIds);
+    }
 
     @Override
     @CacheInvalidate(name = "application::", key = "#application.id")
