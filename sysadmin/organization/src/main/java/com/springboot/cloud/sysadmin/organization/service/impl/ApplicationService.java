@@ -52,7 +52,7 @@ public class ApplicationService extends ServiceImpl<ApplicationMapper, Applicati
     @Override
     public IPage<Application> query(Page page, ApplicationQueryParam applicationQueryParam) {
         QueryWrapper<Application> queryWrapper = applicationQueryParam.build();
-        queryWrapper.eq(StringUtils.isNotBlank(applicationQueryParam.getAppName()), "appName", applicationQueryParam.getAppName());
+        queryWrapper.eq(StringUtils.isNotBlank(applicationQueryParam.getApp_name()), "app_name", applicationQueryParam.getApp_name());
         return this.page(page, queryWrapper);
     }
 

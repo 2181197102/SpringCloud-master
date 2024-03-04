@@ -20,9 +20,9 @@ public class ApplicationVo extends BaseVo<Application> {
 
 
     private String id;
-    private String appName;
+    private String app_name;
     private String description;
-    private String appIcon;
+    private String app_icon;
 
     // Getters and Setters
 }

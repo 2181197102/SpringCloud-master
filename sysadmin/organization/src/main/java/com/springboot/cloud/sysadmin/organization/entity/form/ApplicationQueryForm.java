@@ -16,7 +16,7 @@ import java.util.Date;
 public class ApplicationQueryForm extends BaseQueryForm<ApplicationQueryParam>{
 
     @ApiModelProperty(value = "应用名称")
-    private String appName;
+    private String app_name;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Past(message = "查询开始时间必须小于当前日期")
