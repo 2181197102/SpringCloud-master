@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("applications")
 public class Application extends BasePo {
-    private String id;
+
     private String appName;
     private String description;
     private String appIcon;

@@ -14,8 +14,6 @@ import java.util.Date;
 @Data
 
 public class ApplicationQueryForm extends BaseQueryForm<ApplicationQueryParam>{
-    @ApiModelProperty(value = "应用id")
-    private String id;
 
     @ApiModelProperty(value = "应用名称")
     private String appName;

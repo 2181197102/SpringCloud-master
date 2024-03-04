@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationQueryParam extends BaseParam<Application> {
-    private String id;
     private String appName;
 }

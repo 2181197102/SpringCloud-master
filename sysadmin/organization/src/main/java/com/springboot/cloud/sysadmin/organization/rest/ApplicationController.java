@@ -73,7 +73,7 @@ public class ApplicationController {
         )
         @PostMapping(value = "/conditions")
         public Result query(@Valid @RequestBody ApplicationQueryForm applicationQueryForm) {
-            log.debug("query with name:{}", applicationQueryForm);
+            log.debug("query with appName:{}", applicationQueryForm);
             return Result.success(applicationService.query(applicationQueryForm.getPage(), applicationQueryForm.toParam(ApplicationQueryParam.class)));
         }
 
