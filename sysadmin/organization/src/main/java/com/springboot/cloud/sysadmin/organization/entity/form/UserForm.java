@@ -72,6 +72,6 @@ public class UserForm extends BaseForm<User> {
     private String usertype = "0";
 
     // 新增字段
-    @ApiModelProperty(value = "用户拥有的角色id列表")
+    @ApiModelProperty(value = "用户拥有的应用id列表")
     private Set<String> applicationIds;
 }

@@ -64,7 +64,14 @@ public class ApplicationService extends ServiceImpl<ApplicationMapper, Applicati
     @Cached(name = "application4user::", key = "#userId", cacheType = CacheType.BOTH)
     public List<Application> query(String userId) {
         Set<String> applicationIds = userApplicationService.queryByUserId(userId);
-        return (List<Application>) this.listByIds(applicationIds);
+        List<Application> applications = (List<Application>) this.listByIds(applicationIds);
+
+        // 如果查询结果为空或不存在，抛出异常
+        if (applications == null || applications.isEmpty()) {
+            throw new ApplicationNotFoundException("Applications not found for user ID: " + userId);
+        }
+
+        return applications;
     }
 
     @Override
