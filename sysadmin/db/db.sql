@@ -139,7 +139,7 @@ DROP TABLE IF EXISTS applications;
 CREATE TABLE applications
 (
     id                      VARCHAR(20) PRIMARY KEY COMMENT '应用id',
-    appname                 VARCHAR(100) NOT NULL COMMENT '应用名称',
+    app_name                 VARCHAR(100) NOT NULL COMMENT '应用名称',
     description             VARCHAR(500) COMMENT '应用描述',
     app_icon                VARCHAR(255) COMMENT '应用图标URL',
     created_time            DATETIME     NOT NULL DEFAULT now() COMMENT '创建时间',
@@ -147,7 +147,7 @@ CREATE TABLE applications
     created_by              VARCHAR(100) NOT NULL COMMENT '创建人',
     updated_by              VARCHAR(100) NOT NULL COMMENT '更新人'
 ) COMMENT '应用表';
-CREATE UNIQUE INDEX ux_application_appname ON applications (appname);
+CREATE UNIQUE INDEX ux_application_app_name ON applications (app_name);
 
 -- 应用权限表
 DROP TABLE IF EXISTS user_application_permission;
@@ -226,7 +226,7 @@ VALUES (101, 'admin', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624
         'user2', 12345678901, now(), now(), 'system', 'system');
 -- 应用
 INSERT INTO applications
-(id, appname, description, app_icon, created_time, updated_time, created_by, updated_by)
+(id, app_name, description, app_icon, created_time, updated_time, created_by, updated_by)
 VALUES
     ('1', 'app1', '这是一个示例应用程序。', 'http://example.com/icon1.png', now(), now(), 'admin', 'admin'),
     ('2', 'app2', '这是一个示例应用程序。', 'http://example.com/icon2.png', now(), now(), 'admin', 'admin');
