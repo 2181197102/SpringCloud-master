@@ -35,5 +35,5 @@ public class UserQueryForm extends BaseQueryForm<UserQueryParam> {
 
     // 新增字段
     @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
-    private Integer usertype;
+    private String usertype;
 }

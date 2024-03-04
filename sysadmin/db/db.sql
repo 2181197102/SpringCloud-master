@@ -108,7 +108,7 @@ CREATE TABLE users
     account_non_expired     BOOLEAN COMMENT '账号是否未过期',
     credentials_non_expired BOOLEAN COMMENT '密码是否未过期',
     account_non_locked      BOOLEAN COMMENT '是否未锁定',
-    usertype                TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户身份，0为其他，1为医护人员',
+    usertype                VARCHAR(1) NOT NULL DEFAULT '0' COMMENT '用户身份，0为其他，1为医护人员',
     attach                  VARCHAR(255) COMMENT '用户身份附件',
     created_time            DATETIME     NOT NULL DEFAULT now() COMMENT '创建时间',
     updated_time            DATETIME     NOT NULL DEFAULT now() COMMENT '更新时间',
@@ -215,15 +215,15 @@ CREATE TABLE role_resource_relation
 
 -- 用户
 INSERT INTO users (id, username, password, deleted, enabled, account_non_expired, credentials_non_expired,
-                   account_non_locked, name, mobile, created_time, updated_time, created_by, updated_by)
+                   account_non_locked, name, mobile, created_time, updated_time, created_by, updated_by, usertype, attach)
 VALUES (101, 'admin', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
-        '超级管理员', '', now(), now(), 'system', 'system'),
+        '超级管理员', '', now(), now(), 'system', 'system', '0', ''),
        (102, 'zhoutaoo', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
-        '周涛', 15619841000, now(), now(), 'system', 'system'),
+        '周涛', 15619841000, now(), now(), 'system', 'system', '0', ''),
        (103, 'testuser1', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
-        'user1', 12345678900, now(), now(), 'system', 'system'),
+        'user1', 12345678900, now(), now(), 'system', 'system', '0', 'url1'),
        (104, 'testuser2', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
-        'user2', 12345678901, now(), now(), 'system', 'system');
+        'user2', 12345678901, now(), now(), 'system', 'system', '1', 'url2');
 -- 应用
 INSERT INTO applications
 (id, app_name, description, app_icon, created_time, updated_time, created_by, updated_by)

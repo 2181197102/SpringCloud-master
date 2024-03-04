@@ -45,9 +45,6 @@ public class User extends BasePo {
     private String attach; // 用户身份附件，存储文件路径或其他标识，以便于识别用户的额外身份信息。
 
     // 新增字段
-    private Integer usertype; // 用户身份，0为其他，1为医护人员等。使用整型存储，便于在数据库中进行查询和索引。
+    private String usertype; // 用户身份，0为其他，1为医护人员等。使用整型存储，便于在数据库中进行查询和索引。
 
-    // 注意：由于在数据库中`usertype`字段被定义为`TINYINT(3) UNSIGNED`，
-    // 在Java中使用`Integer`类型来对应此字段，以确保可以正确处理无符号的小整数值。
-    // 如果您的应用需要处理更大范围的用户类型值，您可以考虑使用更大的整型，如`Long`。
 }

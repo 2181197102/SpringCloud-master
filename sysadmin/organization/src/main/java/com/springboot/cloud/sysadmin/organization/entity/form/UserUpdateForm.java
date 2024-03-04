@@ -51,5 +51,5 @@ public class UserUpdateForm extends BaseForm<User> {
 
     // 新增字段
     @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
-    private Integer usertype = 0;
+    private String usertype = "0";
 }
