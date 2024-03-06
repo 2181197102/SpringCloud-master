@@ -159,10 +159,7 @@ CREATE TABLE user_application_permission
     created_time   DATETIME NOT NULL DEFAULT now() COMMENT '创建时间',
     updated_time   DATETIME NOT NULL DEFAULT now() COMMENT '更新时间',
     created_by     VARCHAR(100) NOT NULL COMMENT '创建人',
-    updated_by     VARCHAR(100) NOT NULL COMMENT '更新人',
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (application_id) REFERENCES applications(id),
-    UNIQUE INDEX ux_user_application (user_id, application_id)
+    updated_by     VARCHAR(100) NOT NULL COMMENT '更新人'
 ) COMMENT '用户应用权限表';
 
 
