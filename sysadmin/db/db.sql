@@ -100,14 +100,16 @@ CREATE TABLE users
     id                      VARCHAR(20) PRIMARY KEY COMMENT '用户id',
     username                VARCHAR(100) NOT NULL COMMENT '用户名',
     password                VARCHAR(100) NOT NULL COMMENT '用户密码密文',
-    name                    VARCHAR(200) COMMENT '用户姓名',
-    mobile                  VARCHAR(20) COMMENT '用户手机',
+    name                    VARCHAR(200) NOT NULL COMMENT '用户姓名',
+    mobile                  VARCHAR(20) NOT NULL COMMENT '用户手机',
     description             VARCHAR(500) COMMENT '简介',
     deleted                 VARCHAR(1)   NOT NULL DEFAULT 'N' COMMENT '是否已删除Y：已删除，N：未删除',
     enabled                 BOOLEAN COMMENT '是否有效用户',
     account_non_expired     BOOLEAN COMMENT '账号是否未过期',
     credentials_non_expired BOOLEAN COMMENT '密码是否未过期',
     account_non_locked      BOOLEAN COMMENT '是否未锁定',
+    usertype                VARCHAR(1) NOT NULL DEFAULT '0' COMMENT '用户身份，0为其他，1为医护人员',
+    attach                  VARCHAR(255) COMMENT '用户身份附件',
     created_time            DATETIME     NOT NULL DEFAULT now() COMMENT '创建时间',
     updated_time            DATETIME     NOT NULL DEFAULT now() COMMENT '更新时间',
     created_by              VARCHAR(100) NOT NULL COMMENT '创建人',
@@ -131,6 +133,35 @@ CREATE TABLE roles
     created_by   VARCHAR(100) NOT NULL COMMENT '创建人',
     updated_by   VARCHAR(100) NOT NULL COMMENT '更新人'
 ) COMMENT '角色表';
+
+-- 应用表
+DROP TABLE IF EXISTS applications;
+CREATE TABLE applications
+(
+    id                      VARCHAR(20) PRIMARY KEY COMMENT '应用id',
+    app_name                 VARCHAR(100) NOT NULL COMMENT '应用名称',
+    description             VARCHAR(500) COMMENT '应用描述',
+    app_icon                VARCHAR(255) COMMENT '应用图标URL',
+    created_time            DATETIME     NOT NULL DEFAULT now() COMMENT '创建时间',
+    updated_time            DATETIME     NOT NULL DEFAULT now() COMMENT '更新时间',
+    created_by              VARCHAR(100) NOT NULL COMMENT '创建人',
+    updated_by              VARCHAR(100) NOT NULL COMMENT '更新人'
+) COMMENT '应用表';
+CREATE UNIQUE INDEX ux_application_app_name ON applications (app_name);
+
+-- 应用权限表
+DROP TABLE IF EXISTS user_application_permission;
+CREATE TABLE user_application_permission
+(
+    id             VARCHAR(20) PRIMARY KEY COMMENT 'ID',
+    user_id        VARCHAR(20) NOT NULL COMMENT '用户ID',
+    application_id VARCHAR(20) NOT NULL COMMENT '应用ID',
+    created_time   DATETIME NOT NULL DEFAULT now() COMMENT '创建时间',
+    updated_time   DATETIME NOT NULL DEFAULT now() COMMENT '更新时间',
+    created_by     VARCHAR(100) NOT NULL COMMENT '创建人',
+    updated_by     VARCHAR(100) NOT NULL COMMENT '更新人'
+) COMMENT '用户应用权限表';
+
 
 -- 资源表
 DROP TABLE IF EXISTS resource;
@@ -181,16 +212,35 @@ CREATE TABLE role_resource_relation
 
 -- 用户
 INSERT INTO users (id, username, password, deleted, enabled, account_non_expired, credentials_non_expired,
-                   account_non_locked, name, mobile, created_time, updated_time, created_by, updated_by)
+                   account_non_locked, name, mobile, created_time, updated_time, created_by, updated_by, usertype, attach)
 VALUES (101, 'admin', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
-        '超级管理员', '', now(), now(), 'system', 'system'),
+        '超级管理员', '', now(), now(), 'system', 'system', '0', ''),
        (102, 'zhoutaoo', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
-        '周涛', 15619841000, now(), now(), 'system', 'system');
+        '周涛', 15619841000, now(), now(), 'system', 'system', '0', ''),
+       (103, 'testuser1', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
+        'user1', 12345678900, now(), now(), 'system', 'system', '0', 'url1'),
+       (104, 'testuser2', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'N', true, true, true, true,
+        'user2', 12345678901, now(), now(), 'system', 'system', '1', 'url2');
+-- 应用
+INSERT INTO applications
+(id, app_name, description, app_icon, created_time, updated_time, created_by, updated_by)
+VALUES
+    ('1', 'app1', '这是一个示例应用程序。', 'http://example.com/icon1.png', now(), now(), 'admin', 'admin'),
+    ('2', 'app2', '这是一个示例应用程序。', 'http://example.com/icon2.png', now(), now(), 'admin', 'admin');
+-- 应用权限
+INSERT INTO user_application_permission
+(id, user_id, application_id, created_time, updated_time, created_by, updated_by)
+VALUES
+    ('1', '103', '1', now(), now(), 'admin', 'admin'),
+    ('2', '103', '2', now(), NOW(), 'admin', 'admin'),
+    ('3', '104', '1', now(), now(), 'admin', 'admin'),
+    ('4', '104', '2', now(), NOW(), 'admin', 'admin');
+
 -- 角色
 INSERT INTO roles (id, code, name, description, created_time, updated_time, created_by, updated_by)
 VALUES (101, 'ADMIN', '超级管理员', '公司IT总负责人', now(), now(), 'system', 'system'),
-       (102, 'FIN', '财务', '财务', now(), now(), 'system', 'system'),
-       (103, 'IT', 'IT', 'IT角色', now(), now(), 'system', 'system');
+       (102, 'DOC', '医护人员', '医护人员', now(), now(), 'system', 'system'),
+       (103, 'PAT', '患者', '患者', now(), now(), 'system', 'system');
 -- 资源
 INSERT INTO resource (id, name, code, type, url, method, description, created_time, updated_time, created_by,
                       updated_by)

@@ -1,7 +1,7 @@
 package com.springboot.cloud.sysadmin.organization.entity.form;
 
 import com.springboot.cloud.common.web.entity.form.BaseQueryForm;
-import com.springboot.cloud.sysadmin.organization.entity.param.UserQueryParam;
+import com.springboot.cloud.sysadmin.organization.entity.param.ApplicationQueryParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,16 +12,11 @@ import java.util.Date;
 
 @ApiModel
 @Data
-public class UserQueryForm extends BaseQueryForm<UserQueryParam> {
 
-    @ApiModelProperty(value = "用户名")
-    private String username;
+public class ApplicationQueryForm extends BaseQueryForm<ApplicationQueryParam>{
 
-    @ApiModelProperty(value = "用户姓名")
-    private String name;
-
-    @ApiModelProperty(value = "手机号")
-    private String mobile;
+    @ApiModelProperty(value = "应用名称")
+    private String app_name;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Past(message = "查询开始时间必须小于当前日期")
@@ -32,8 +27,4 @@ public class UserQueryForm extends BaseQueryForm<UserQueryParam> {
     @Past(message = "查询结束时间必须小于当前日期")
     @ApiModelProperty(value = "查询结束时间")
     private Date createdTimeEnd;
-
-    // 新增字段
-    @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
-    private String usertype;
 }

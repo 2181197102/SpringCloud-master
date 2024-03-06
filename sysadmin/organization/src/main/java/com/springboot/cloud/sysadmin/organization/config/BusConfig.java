@@ -15,18 +15,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@Slf4j
+@Configuration  // 标记这个类为配置类，Spring Boot在启动时会自动扫描并加载这些配置
+@Slf4j  // 使用Lombok库的@Slf4j注解自动为类提供一个log对象，用于记录日志
 public class BusConfig {
-    @Value("${spring.application.name}")
+    @Value("${spring.application.name}")  // 使用@Value注解从应用的配置文件中读取spring.application.name的值，并赋给appName变量
     private String appName;
 
+    // 定义队列名称、交换机名称和路由键的常量
     public static final String QUEUE_NAME = "event-organization";
     public static final String EXCHANGE_NAME = "spring-boot-exchange";
     public static final String RESOURCE_ROUTING_KEY = "organization-resource";
     public static final String PERMISSION_ROUTING_KEY = "organization-permission";
     private static final String PERMISSION_QUEUE_SUFFIX = "permission";
 
+    // 定义一个Bean，创建并返回一个队列对象。这个队列不是持久的（第二个参数是false）
     @Bean
     Queue queue() {
         log.info("queue name:{}", QUEUE_NAME);
@@ -79,18 +81,21 @@ public class BusConfig {
 //        return new ContentTypeDelegatingMessageConverter(new Jackson2JsonMessageConverter(objectMapper));
 //    }
 
+    // 定义一个Bean，创建并返回一个TopicExchange对象。Topic交换机可以根据消息的routing key将消息路由到一个或多个队列
     @Bean
     TopicExchange exchange() {
         log.info("exchange:{}", EXCHANGE_NAME);
         return new TopicExchange(EXCHANGE_NAME);
     }
 
+    // 定义一个Bean，创建并返回一个绑定对象。这个绑定定义了队列与交换机的绑定关系，并指定了routing key
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
         log.info("binding {} to {} with {}", queue, exchange, RESOURCE_ROUTING_KEY);
         return BindingBuilder.bind(queue).to(exchange).with(RESOURCE_ROUTING_KEY);
     }
 
+    // 定义一个Bean，创建并返回一个消息转换器对象。这个转换器用于将Java对象转换为消息体格式，这里使用的是JSON格式
     @Bean
     public MessageConverter messageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();

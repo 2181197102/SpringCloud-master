@@ -44,4 +44,16 @@ public class UserUpdateForm extends BaseForm<User> {
 
     @ApiModelProperty(value = "用户账号是否被锁定，true为未锁定")
     private Boolean accountNonLocked = true;
+
+    // 新增字段
+    @ApiModelProperty(value = "用户身份附件")
+    private String attach;
+
+    // 新增字段
+    @ApiModelProperty(value = "用户身份类型，0为其他（默认），1为医护人员等")
+    private String usertype = "0";
+
+    // 新增字段
+    @ApiModelProperty(value = "用户拥有的应用id列表")
+    private Set<String> applicationIds;
 }
