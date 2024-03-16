@@ -7,6 +7,7 @@ import com.springboot.cloud.sysadmin.organization.entity.po.Application;
 import com.springboot.cloud.sysadmin.organization.entity.vo.ApplicationVo;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IApplicationService {
     /**
@@ -44,7 +45,7 @@ public interface IApplicationService {
      *
      * @return
      */
-    List<Application> query(String userId);
+    Set<String> query(String userId);
 
     /**
      * 更新应用信息

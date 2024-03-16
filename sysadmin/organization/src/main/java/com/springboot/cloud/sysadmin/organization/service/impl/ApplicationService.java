@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.springboot.cloud.common.web.entity.po.BasePo;
 import com.springboot.cloud.sysadmin.organization.dao.ApplicationMapper;
 import com.springboot.cloud.sysadmin.organization.entity.param.ApplicationQueryParam;
 import com.springboot.cloud.sysadmin.organization.entity.po.Application;
@@ -17,11 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -56,22 +60,21 @@ public class ApplicationService extends ServiceImpl<ApplicationMapper, Applicati
     @Override
     public IPage<Application> query(Page page, ApplicationQueryParam applicationQueryParam) {
         QueryWrapper<Application> queryWrapper = applicationQueryParam.build();
-        queryWrapper.eq(StringUtils.isNotBlank(applicationQueryParam.getApp_name()), "app_name", applicationQueryParam.getApp_name());
+        queryWrapper.like(StringUtils.isNotBlank(applicationQueryParam.getAppName()), "app_name", applicationQueryParam.getAppName());
         return this.page(page, queryWrapper);
     }
 
     @Override
-    @Cached(name = "application4user::", key = "#userId", cacheType = CacheType.BOTH)
-    public List<Application> query(String userId) {
+//    @Cached(name = "application4user::", key = "#userId", cacheType = CacheType.BOTH)
+    public Set<String> query(String userId) {
         Set<String> applicationIds = userApplicationService.queryByUserId(userId);
-        List<Application> applications = (List<Application>) this.listByIds(applicationIds);
-
-        // 如果查询结果为空或不存在，抛出异常
-        if (applications == null || applications.isEmpty()) {
-            throw new ApplicationNotFoundException("Applications not found for user ID: " + userId);
+        List<Application> applications = null;
+        if (!CollectionUtils.isEmpty(applicationIds)) {
+            applications = (List<Application>) this.listByIds(applicationIds);
+            return applications.stream().map(BasePo::getId).collect(Collectors.toSet());
+        }else{
+            return new HashSet<>();
         }
-
-        return applications;
     }
 
     @Override

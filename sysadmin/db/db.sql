@@ -295,7 +295,17 @@ VALUES (101, '新增用户', 'user_manager:btn_add', 'user', '/user', 'POST', '�
        (317, '搜索网关路由', 'resource_manager:query', 'resource', '/resource/conditions', 'POST', '搜索资源', now(), now(),
         'system', 'system'),
        (318, '全局加载路由', 'resource_manager:all', 'resource', '/resource/all', 'GET', '查询全部资源', now(), now(), 'system',
-        'system');
+        'system'),
+       (501, '新增应用', 'app_manager:btn_add', 'app', '/app', 'POST', '新增应用功能', now(), now(), 'system', 'system'),
+       (502, '编辑应用', 'app_manager:btn_edit', 'app', '/app/{id}', 'PUT', '编辑应用功能', now(), now(), 'system', 'system'),
+       (503, '删除应用', 'app_manager:btn_del', 'app', '/app/{id}', 'DELETE', '根据应用id删除应用', now(), now(), 'system',
+        'system'),
+       (504, '查看应用', 'app_manager:view', 'app', '/app/{id}', 'GET', '根据应用id获取应用', now(), now(), 'system', 'system'),
+       (505, '搜索应用', 'app_manager:query', 'app', '/app/conditions', 'POST', '根据条件查询应用', now(), now(), 'system',
+        'system'),
+       (506, '获取应用', 'app_manager:get', 'app', '/app', 'GET', '根据唯一标识获取应用', now(), now(), 'system', 'system'),
+       (507, '查询应用', 'app_manager:getbyuser', 'app', '/app/user/{userId}', 'GET', '根据用户id查询用户可使用的应用', now(), now(), 'system', 'system')
+;
 
 -- 用户关系授权
 INSERT INTO user_role_relation (id, user_id, role_id, created_time, updated_time, created_by, updated_by)

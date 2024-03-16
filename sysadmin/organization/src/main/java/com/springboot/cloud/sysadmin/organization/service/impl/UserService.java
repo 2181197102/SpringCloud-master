@@ -128,7 +128,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
             queryWrapper.eq("mobile", userQueryParam.getMobile());
         }
         // 这里添加了usertype作为查询条件
-        if (userQueryParam.getUsertype() != null) {
+        if (StringUtils.isNotBlank(userQueryParam.getUsertype())) {
             queryWrapper.eq("usertype", userQueryParam.getUsertype());
         }
         // 执行查询
