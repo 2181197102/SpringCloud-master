@@ -1,19 +1,10 @@
-package com.springboot.cloud.sysadmin.organization.entity.po;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+package com.springboot.cloud.nailservice.nail.entity.pojo;
 import com.springboot.cloud.common.web.entity.po.BasePo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 
 @Data
-@Builder
+@EqualsAndHashCode(callSuper = false )
 @NoArgsConstructor
-@AllArgsConstructor
-@TableName("applications")
 public class Application extends BasePo {
 
     private String app_name;

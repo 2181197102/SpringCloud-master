@@ -128,3 +128,7 @@ mybatis-plus:
     db-config:
       logic-delete-value: "Y" # 逻辑已删除值(默认为 Y)
       logic-not-delete-value: "N" # 逻辑未删除值(默认为 N)
+
+feign:
+  okhttp:
+    enabled: true # 开启OKHttp功能

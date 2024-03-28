@@ -1,18 +1,22 @@
-package com.springboot.cloud.sysadmin.organization;
+package com.springboot.cloud.nailservice.nail;
 
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
+import com.springboot.cloud.nailservice.nail.config.FeiginClientConfig;
+import com.springboot.cloud.sysadmin.organization.OrganizationApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableMethodCache(basePackages = "com.springboot.cloud")
 @EnableCreateCacheAnnotation
-public class OrganizationApplication {
+@EnableFeignClients(defaultConfiguration = FeiginClientConfig.class) //, basePackages = {"com.springboot.cloud.nailservice.nail.config"}
+public class NailApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrganizationApplication.class, args);
     }
