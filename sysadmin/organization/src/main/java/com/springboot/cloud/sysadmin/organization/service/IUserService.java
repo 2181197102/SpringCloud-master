@@ -6,6 +6,8 @@ import com.springboot.cloud.sysadmin.organization.entity.param.UserQueryParam;
 import com.springboot.cloud.sysadmin.organization.entity.po.User;
 import com.springboot.cloud.sysadmin.organization.entity.vo.UserVo;
 
+import java.util.List;
+
 public interface IUserService {
     /**
      * 获取用户
