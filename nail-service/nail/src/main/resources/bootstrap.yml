@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8030}
+  port: ${SERVER_PORT:8457}
 spring:
   application:
     name: nail

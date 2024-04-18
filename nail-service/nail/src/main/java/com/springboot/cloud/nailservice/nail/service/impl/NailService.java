@@ -5,45 +5,113 @@ package com.springboot.cloud.nailservice.nail.service.impl;
 
 //TODO 调用外部http请求使用模型接口
 
-import jdk.jshell.Diag;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.springboot.cloud.common.core.entity.vo.Result;
+import com.springboot.cloud.common.core.util.UserContextHolder;
+import com.springboot.cloud.nailservice.nail.clients.UserClient;
+import com.springboot.cloud.nailservice.nail.dao.NailDiagMapper;
+import com.springboot.cloud.nailservice.nail.entity.form.SaveDiagForm;
+import com.springboot.cloud.nailservice.nail.entity.param.NailDiagQueryParam;
+import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
+import com.springboot.cloud.nailservice.nail.entity.pojo.User;
+import com.springboot.cloud.nailservice.nail.entity.vo.NailDiagVo;
+import com.springboot.cloud.nailservice.nail.service.INailService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.apache.commons.lang.StringUtils;
 
-public class NailService {
-    private final DiagRepository diagRepository;
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
-    @Autowired
-    public DiagServiceImpl(DiagRepository diagRepository) {
-        this.diagRepository = diagRepository;
+@Service    // @Service是Spring框架提供的一个注解，用于标注在类上，表示将该类定义为Spring容器中的一个服务组件（Service Component）。
+            // 它是一个专门用于业务逻辑层（Business Service Layer）的注解，表明该类主要用于执行业务操作、事务处理等。
+@Slf4j      // @Slf4j是Lombok提供的一个注解，用于在类上生成一个log属性，用于记录日志。
+public class NailService extends ServiceImpl<NailDiagMapper, NailDiag> implements INailService {
+
+    @Resource
+    private UserClient userClient;
+
+    @Override
+    public boolean saveDiag(SaveDiagForm saveDiagForm) {
+        String username = getUserName();
+        saveDiagForm.setDoctorName(username);
+        NailDiag diagnosis = saveDiagForm.toPo(NailDiag.class);
+        return this.save(diagnosis);
     }
 
     @Override
-    public Diag getDiagById(String id) {
-        return diagRepository.findById(id).orElse(null);
+    public boolean delete(String diagnosisCode) {
+        LambdaQueryWrapper<NailDiag> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(NailDiag::getDiagnosisCode, diagnosisCode);
+        return this.baseMapper.delete(lqw) == 1;
     }
 
     @Override
-    public List<Diag> getDiagsByUserId(String userId) {
-        return diagRepository.findByUserId(userId);
+    public boolean update(NailDiag nailDiag) {
+        LambdaQueryWrapper<NailDiag> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(NailDiag::getDiagnosisCode, nailDiag.getDiagnosisCode());
+        return this.update(nailDiag, lqw);
     }
 
     @Override
-    public Diag createDiag(Diag diag) {
-        return diagRepository.save(diag);
+    public NailDiagVo get(String diagnosisCode) {
+        LambdaQueryWrapper<NailDiag> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(NailDiag::getDiagnosisCode, diagnosisCode);
+        NailDiag nailDiag = this.getOne(lqw);
+        return new NailDiagVo(nailDiag);
     }
 
     @Override
-    public Diag updateDiag(String id, Diag diag) {
-        if (diagRepository.existsById(id)) {
-            diag.setId(id);
-            return diagRepository.save(diag);
+    public List<NailDiag> getAll() {
+        List<NailDiag> diagnoses = this.list();
+        return diagnoses;
+    }
+
+    @Override
+    public IPage<NailDiag> query(Page page, NailDiagQueryParam nailDiagQueryParam) {
+        boolean isPatient = verifyUserRolePatient();
+        LambdaQueryWrapper<NailDiag> lqw = new LambdaQueryWrapper<>();
+        lqw.like(StringUtils.isNotBlank(nailDiagQueryParam.getDiagnosisCode()), NailDiag::getDiagnosisCode, nailDiagQueryParam.getDiagnosisCode());
+        if (isPatient) {
+            lqw.like(NailDiag::getPatientName, getUserName());
+        } else {
+            lqw.like(StringUtils.isNotBlank(nailDiagQueryParam.getPatientName()), NailDiag::getPatientName, nailDiagQueryParam.getPatientName());
         }
-        return null;
+        lqw.like(StringUtils.isNotBlank(nailDiagQueryParam.getDoctorName()), NailDiag::getDoctorName, nailDiagQueryParam.getDoctorName());
+        lqw.eq(verify(nailDiagQueryParam.getResultAccuracy()), NailDiag::getResultAccuracy, nailDiagQueryParam.getResultAccuracy());
+        IPage<NailDiag> retPage = this.page(page, lqw);
+        return retPage;
     }
 
     @Override
-    public void deleteDiag(String id) {
-        diagRepository.deleteById(id);
+    public void saveOneDiag(NailDiag save) {
+        this.save(save);
     }
+
+    private boolean verify(Integer result) {
+        return result != null && result != -1;
+    }
+
+    private boolean verifyUserRolePatient() {
+        String username = getUserName();
+        Result<User> user = userClient.getUserByUniqueId(username);
+        Set<String> roles = user.getData().getRoles();
+        for (String role : roles) {
+            if ("PAT".equals(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String getUserName() {
+        return UserContextHolder.getInstance().getUsername();
+    }
+
 }
 
 /*// 在业务逻辑中根据用户角色选择VO进行展示

@@ -1,10 +1,13 @@
 package com.springboot.cloud.nailservice.nail.entity.form;
 
 import com.springboot.cloud.common.web.entity.form.BaseQueryForm;
-import com.springboot.cloud.nailservice.nail.entity.param.NailDOCQueryParam;
+import com.springboot.cloud.nailservice.nail.entity.param.NailDiagQueryParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Past;
@@ -12,15 +15,21 @@ import java.util.Date;
 
 @ApiModel
 @Data
-public class NailDOCQueryForm extends BaseQueryForm<NailDOCQueryParam> {
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+public class NailDiagQueryForm extends BaseQueryForm<NailDiagQueryParam> {
 
-    @ApiModelProperty(value = "用户ID")
-    private String userId;
+    @ApiModelProperty(value = "诊断编码")
+    private String diagnosisCode;
 
-    @ApiModelProperty(value = "应用ID")
-    private String applicationId;
+    @ApiModelProperty(value = "诊断者姓名")
+    private String doctorName;
 
-    @ApiModelProperty(value = "诊断结果准确率，0：准确, 1：基本准确, 2：不准确")
+    @ApiModelProperty(value = "患者姓名")
+    private String patientName;
+
+    @ApiModelProperty(value = "诊断结果准确率，1：准确, 0：不准确")
     private Integer resultAccuracy;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

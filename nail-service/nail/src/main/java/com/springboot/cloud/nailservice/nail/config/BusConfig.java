@@ -24,8 +24,8 @@ public class BusConfig {
     // 定义队列名称、交换机名称和路由键的常量
     public static final String QUEUE_NAME = "event-organization";
     public static final String EXCHANGE_NAME = "spring-boot-exchange";
-    public static final String RESOURCE_ROUTING_KEY = "organization-resource";
-    public static final String PERMISSION_ROUTING_KEY = "organization-permission";
+    public static final String RESOURCE_ROUTING_KEY = "nail-resource";
+    public static final String PERMISSION_ROUTING_KEY = "nail-permission";
     private static final String PERMISSION_QUEUE_SUFFIX = "permission";
 
     // 定义一个Bean，创建并返回一个队列对象。这个队列不是持久的（第二个参数是false）
