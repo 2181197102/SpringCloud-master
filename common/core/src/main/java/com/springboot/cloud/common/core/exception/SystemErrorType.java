@@ -16,7 +16,9 @@ public enum SystemErrorType implements ErrorType {
     INVALID_TOKEN("020001", "无效token"),
     UPLOAD_FILE_SIZE_LIMIT("020010", "上传文件大小超过限制"),
 
-    DUPLICATE_PRIMARY_KEY("030000","唯一键冲突");
+    DUPLICATE_PRIMARY_KEY("030000", "唯一键冲突"),
+
+    SAVE_FILE_ERROR("040101", "保存文件失败");
 
     /**
      * 错误类型码

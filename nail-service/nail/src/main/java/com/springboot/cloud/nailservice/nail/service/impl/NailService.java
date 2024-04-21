@@ -113,39 +113,3 @@ public class NailService extends ServiceImpl<NailDiagMapper, NailDiag> implement
     }
 
 }
-
-/*// 在业务逻辑中根据用户角色选择VO进行展示
-public class NailService {
-
-    public Object getNailData(String userId, String userRole) {
-        // 根据userId获取Nail数据，这里假设获取到了nail对象
-
-        if ("patient".equals(userRole)) {
-            // 如果是患者角色，返回患者展示的VO
-            return convertToPatientVo(nail);
-        } else if ("medical_staff".equals(userRole)) {
-            // 如果是医护人员角色，返回医护人员展示的VO
-            return convertToMedicalStaffVo(nail);
-        } else {
-            // 其他情况，根据业务需求处理
-            return null;
-        }
-    }
-
-    private PatientNailVo convertToPatientVo(Nail nail) {
-        PatientNailVo patientVo = new PatientNailVo();
-        // 填充患者展示VO的数据，这里假设只需要填充基本数据
-        // patientVo.setXXX(nail.getXXX());
-        return patientVo;
-    }
-
-    private MedicalStaffNailVo convertToMedicalStaffVo(Nail nail) {
-        MedicalStaffNailVo medicalStaffVo = new MedicalStaffNailVo();
-        // 填充医护人员展示VO的数据，包括患者展示VO的数据以及医护人员需要的额外数据
-        // medicalStaffVo.setXXX(nail.getXXX());
-        // medicalStaffVo.setYYY(nail.getYYY());
-        // medicalStaffVo.setZZZ(nail.getZZZ());
-        return medicalStaffVo;
-    }
-}
-*/

@@ -13,9 +13,11 @@ import com.springboot.cloud.nailservice.nail.service.INailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/nail")
@@ -29,11 +31,6 @@ public class NailController {
 
     @Resource
     private IFileService fileService;
-
-//    @PostMapping("/predict")
-//    public Result predict(PredictParam predictParam) throws TException, IOException {
-//        return Result.success(modelService.predict(predictParam));
-//    }
 
     @ApiOperation(value = "上传图片", notes = "上传图片")
     @PostMapping("/file/upload/image")

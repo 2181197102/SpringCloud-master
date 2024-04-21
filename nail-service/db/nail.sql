@@ -14,7 +14,7 @@ CREATE TABLE tb_nail_diag
     patient_name        VARCHAR(20)  NOT NULL COMMENT '患者姓名',
     image_file          VARCHAR(100) NOT NULL COMMENT '用户上传图片,存储图片url',
     diag_result         VARCHAR(500) NOT NULL COMMENT '诊断结果',
-    result_accurancy    INTEGER      NOT NULL COMMENT '诊断结果准确率,1：准确,0：不准确',
+    result_accurancy    INTEGER      NOT NULL COMMENT '诊断结果准确率,1：准确,0：不准确,-1：医生未评测',
     feedback            VARCHAR(500) NOT NULL COMMENT '结果反馈',
     deleted             VARCHAR(1)   NOT NULL DEFAULT 'N' COMMENT '是否已删除Y：已删除，N：未删除',
     created_time        DATETIME     NOT NULL DEFAULT now() COMMENT '创建时间',
@@ -34,7 +34,7 @@ INSERT INTO tb_nail_diag (id, diagnosis_code, user_id, patient_name, image_file,
 VALUES
     ('1', 'D001', 'user123', 'John Doe', 'https://example.com/image1.jpg', 'Nail infection', 1, 'The diagnosis is accurate.', now(), now(), 'admin', 'admin'),
     ('2', 'D002', 'user456', 'Jane Smith', 'https://example.com/image2.jpg', 'Nail psoriasis', 1, 'The diagnosis is accurate.', now(), now(), 'admin', 'admin'),
-    ('3', 'D003', 'user789', 'Alice Johnson', 'https://example.com/image3.jpg', 'Nail trauma', 0, 'The diagnosis needs further examination.', now(), now(), 'admin', 'admin');
+    ('3', 'D003', 'user789', 'Alice Johnson', 'https://example.com/image3.jpg,https://example.com/image4.jpg', 'Nail trauma', 0, 'The diagnosis needs further examination.', now(), now(), 'admin', 'admin');
 
 
 
