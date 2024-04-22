@@ -1,0 +1,16 @@
+version: '3'
+services:
+  nsclc:
+    image: cike/nsclc:latest
+    container_name: sc-nsclc-server
+    volumes:
+      - ./application/data/app/nsclc/server/datas:/app/server/datas
+      - ./application/data/app/nsclc/server/logs:/app/server/logs
+    restart: always
+    networks:
+      - sc-net
+    ports:
+      - "8456:8456"
+    env_file: .env
+    environment:
+      TZ: Asia/Shanghai
