@@ -30,11 +30,13 @@ CREATE TABLE tb_nail_diag
 -- DML准备初始化数据
 
 -- 诊断
-INSERT INTO tb_nail_diag (id, diagnosis_code, user_id, patient_name, image_file, diag_result, result_accurancy, feedback, created_time, updated_time, created_by, updated_by)
+INSERT INTO tb_nail_diag (id, diagnosis_code, docter_name, patient_name, image_file, diag_result, result_accurancy, feedback, created_time, updated_time, created_by, updated_by)
 VALUES
     ('1', 'D001', 'user123', 'John Doe', 'https://example.com/image1.jpg', 'Nail infection', 1, 'The diagnosis is accurate.', now(), now(), 'admin', 'admin'),
     ('2', 'D002', 'user456', 'Jane Smith', 'https://example.com/image2.jpg', 'Nail psoriasis', 1, 'The diagnosis is accurate.', now(), now(), 'admin', 'admin'),
-    ('3', 'D003', 'user789', 'Alice Johnson', 'https://example.com/image3.jpg,https://example.com/image4.jpg', 'Nail trauma', 0, 'The diagnosis needs further examination.', now(), now(), 'admin', 'admin');
+    ('3', 'D003', 'user789', 'Alice Johnson', 'https://example.com/image3.jpg,https://example.com/image4.jpg', 'Nail trauma', 0, 'The diagnosis needs further examination.', now(), now(), 'admin', 'admin'),
+    ('4', 'D004', 'test_doctor_2', 'test_patient_2', '/home/zeno/test_image/JGY1.JPG,/home/zeno/test_image/JZJB2.JPG', '', -1, '', now(), now(), 'admin', 'admin'),
+    ('5', 'D005', '', 'test_patient_2', '/home/zeno/test_image/JGY1.JPG,/home/zeno/test_image/JZJB2.JPG,/home/zeno/test_image/YXBJ16.JPG', '', -1, '', now(), now(), 'admin', 'admin');
 
 
 
