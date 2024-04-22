@@ -1,22 +1,21 @@
 package com.springboot.cloud.nailservice.nail.rest;
 
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.springboot.cloud.common.core.entity.vo.Result;
 import com.springboot.cloud.common.core.util.UserContextHolder;
 import com.springboot.cloud.nailservice.nail.clients.UserClient;
-import com.springboot.cloud.nailservice.nail.entity.param.PredictParam;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
 import com.springboot.cloud.nailservice.nail.entity.pojo.User;
 import com.springboot.cloud.nailservice.nail.entity.vo.PredictVo;
+import com.springboot.cloud.nailservice.nail.exception.FindNoImagePathFromRedisException;
 import com.springboot.cloud.nailservice.nail.exception.PredictionFailedException;
 import com.springboot.cloud.nailservice.nail.service.INailService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -50,23 +49,41 @@ public class ModelController {
     @Resource
     private UserClient userClient;
 
+    @Resource
+    private RedisTemplate<String,String> redisTemplate;
+
 
     @PostMapping("/predict")
-    public Result predict(@RequestBody PredictParam predictParam) throws IOException {
-        return Result.success(predict_service(predictParam));
+    public Result predict(@RequestBody String diagnosisCode) throws IOException {
+        return Result.success(predict_service(diagnosisCode));
     }
 
-    public PredictVo predict_service(PredictParam predictParam) {
-
-        // 请求地址
-        String postUrl = "http://localhost:5000/predict";
+    public PredictVo predict_service(String diagnosisCode) {
 
         // 请求参数JSON格式
 //        public class PredictParam {
 //            private String diagnosisCode;
 //            private String imageFile;
 //        }
-        List<String> filelist = Arrays.asList(predictParam.getImageFile().split(","));
+        // 已取消该设计，改为使用Redis存储图片路径
+
+        // 请求地址
+        String postUrl = "http://localhost:5000/predict";
+
+        // 从 Redis 中获取存储的值
+        String imagePathString = redisTemplate.boundValueOps("diagnosisCode_imagePath_" + diagnosisCode).get();
+
+        // 如果值为空，进行相应的处理
+        List<String> filelist = null;
+        if (imagePathString != null && !imagePathString.isEmpty()) {
+            // 使用逗号分隔符分割字符串，并创建一个 LinkedList 对象
+            filelist = new LinkedList<>(Arrays.asList(imagePathString.split(",")));
+            // 如果需要对列表进行修改，可以使用 LinkedList 提供的方法，如添加、删除等
+        } else {
+            // 处理值为空的情况，如记录日志或者抛出异常
+            throw new FindNoImagePathFromRedisException("Find no image path from redis");
+        }
+
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         for (String file : filelist) {
             File file_i = new File(file);
@@ -84,7 +101,7 @@ public class ModelController {
         // 使用RestTemplate发起请求与接收返回值
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(postUrl, httpEntity, String.class);
 
-        // TODO: 处理返回值
+        // 处理返回值
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             // 获取返回的JSON数据
             String resultData = responseEntity.getBody();
@@ -99,9 +116,9 @@ public class ModelController {
             String diagResult = mostLikelyClass;
 
             // 处理返回的信息
-            PredictVo predictVo = new PredictVo(predictParam.getDiagnosisCode(), diagResult);
+            PredictVo predictVo = new PredictVo(diagnosisCode, diagResult);
             if (verifyUserRolePatient()) {
-                insertPatient(predictParam, predictVo);
+                insertPatient(diagnosisCode, predictVo);
             }
             return predictVo;
         } else {
@@ -110,13 +127,13 @@ public class ModelController {
     }
 
 
-    private void insertPatient(PredictParam predictParam, PredictVo predictVo) {
+    private void insertPatient(String diagnosisCode, PredictVo predictVo) {
         NailDiag save = new NailDiag();
         save.setDoctorName("自测");
         save.setPatientName(getUserName());
         save.setResultAccuracy(-1);
         save.setDiagResult(predictVo.getDiagResult());
-        save.setImageFile(predictParam.getImageFile());
+        save.setImageFile(redisTemplate.boundValueOps("diagnosisCode_imagePath_" + diagnosisCode).get());
         save.setDiagnosisCode(predictVo.getDiagnosisCode());
         try {
             nailService.saveOneDiag(save);

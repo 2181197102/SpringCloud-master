@@ -3,6 +3,8 @@ package com.springboot.cloud.nailservice.nail.exception;
 import com.springboot.cloud.common.core.exception.ErrorType;
 
 public enum PredictionErrorType implements ErrorType {
+
+    FIND_NO_IMAGE_PATH_FROM_REDIS("050100", "在redis中未找到图片路径！"),
     PREDICTION_FAILED("050400", "预测失败！");
 
     /**

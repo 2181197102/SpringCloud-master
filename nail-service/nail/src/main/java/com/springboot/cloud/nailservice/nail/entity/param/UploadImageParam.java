@@ -12,6 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class UploadImageParam {
 
-    private MultipartFile file;
+    private MultipartFile[] file;
 
 }
