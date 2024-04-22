@@ -1,7 +1,9 @@
 package com.springboot.cloud.nailservice.nail.exception;
 
 import com.springboot.cloud.common.core.exception.ErrorType;
+import lombok.Getter;
 
+@Getter
 public enum PredictionErrorType implements ErrorType {
 
     FIND_NO_IMAGE_PATH_FROM_REDIS("050100", "在redis中未找到图片路径！"),
