@@ -344,7 +344,15 @@ VALUES (101, 101, 101, now(), now(), 'system', 'system'),
        (503, 101, 315, now(), now(), 'system', 'system'),
        (504, 101, 316, now(), now(), 'system', 'system'),
        (505, 101, 317, now(), now(), 'system', 'system'),
-       (506, 101, 318, now(), now(), 'system', 'system');
+       (506, 101, 318, now(), now(), 'system', 'system'),
+
+       (609, 101, 501, now(), now(), 'system', 'system'),
+       (602, 101, 502, now(), now(), 'system', 'system'),
+       (603, 101, 503, now(), now(), 'system', 'system'),
+       (604, 101, 504, now(), now(), 'system', 'system'),
+       (605, 101, 505, now(), now(), 'system', 'system'),
+       (606, 101, 506, now(), now(), 'system', 'system'),
+       (607, 101, 507, now(), now(), 'system', 'system');
 
 -- 岗位
 INSERT INTO position (id, name, description, created_time, updated_time, created_by, updated_by)

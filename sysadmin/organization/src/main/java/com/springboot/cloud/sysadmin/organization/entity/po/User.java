@@ -34,6 +34,9 @@ public class User extends BasePo {
                                 // 通过exist属性，可以指定该字段是否为数据库表中的字段，如果设置为false，则表示该字段不是数据库表中的字段。
     private Set<String> roleIds;    // 用于表示一个用户所拥有的角色ID集合（set确保不重复）
 
+    @TableField(exist = false)
+    private Set<String> roles;
+
     @TableLogic // @TableLogic是MyBatis Plus框架提供的一个注解，用于实现逻辑删除功能。
                 // 逻辑删除是相对于物理删除来说的，物理删除会直接从数据库中删除数据行，
                 // 而逻辑删除只是通过更改数据行中某个字段的值来标记该行数据为“已删除”，实际数据行仍然保留在数据库表中。

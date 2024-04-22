@@ -4,4 +4,5 @@
 data
 logs
 target
-
+!docker-compose/application/data
+docker-compose/application/data/app/nsclc/server/datas/files/*

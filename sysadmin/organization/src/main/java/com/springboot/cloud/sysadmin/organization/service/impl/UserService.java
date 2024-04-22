@@ -12,6 +12,7 @@ import com.springboot.cloud.sysadmin.organization.entity.param.UserQueryParam;
 import com.springboot.cloud.sysadmin.organization.entity.po.User;
 import com.springboot.cloud.sysadmin.organization.entity.vo.UserVo;
 import com.springboot.cloud.sysadmin.organization.exception.UserNotFoundException;
+import com.springboot.cloud.sysadmin.organization.service.IRoleService;
 import com.springboot.cloud.sysadmin.organization.service.IUserApplicationService;
 import com.springboot.cloud.sysadmin.organization.service.IUserRoleService;
 import com.springboot.cloud.sysadmin.organization.service.IUserService;
@@ -24,7 +25,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service    // @Service是Spring框架提供的一个注解，用于标注在类上，表示将该类定义为Spring容器中的一个服务组件（Service Component）。
             // 它是一个专门用于业务逻辑层（Business Service Layer）的注解，表明该类主要用于执行业务操作、事务处理等。
@@ -36,6 +41,9 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
 
     @Autowired
     private IUserApplicationService userApplicationService;
+
+    @Resource
+    private IRoleService roleService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -100,7 +108,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     }
 
     @Override
-    @Cached(name = "user::", key = "#uniqueId", cacheType = CacheType.BOTH)
+//    @Cached(name = "user::", key = "#uniqueId", cacheType = CacheType.BOTH)
     public User getByUniqueId(String uniqueId) {
         User user = this.getOne(new QueryWrapper<User>()
                 .eq("username", uniqueId)
@@ -109,7 +117,14 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
         if (Objects.isNull(user)) {
             throw new UserNotFoundException("user not found with uniqueId:" + uniqueId);
         }
-        user.setRoleIds(userRoleService.queryByUserId(user.getId()));
+        Set<String> roleIds = userRoleService.queryByUserId(user.getId());
+        HashSet<String> roles = new HashSet<>();
+        for (String roleId : roleIds) {
+            roles.add(roleService.get(roleId).getCode());
+        }
+
+        user.setRoles(roles);
+        user.setRoleIds(roleIds);
         user.setApplicationIds(userApplicationService.queryByUserId(user.getId()));
         return user;
     }
