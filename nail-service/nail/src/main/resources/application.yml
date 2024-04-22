@@ -131,5 +131,7 @@ mybatis-plus:
       logic-not-delete-value: "N" # 逻辑未删除值(默认为 N)
 
 feign:
+  #  sentinel:
+  #    enabled: true
   okhttp:
     enabled: true # 开启OKHttp功能

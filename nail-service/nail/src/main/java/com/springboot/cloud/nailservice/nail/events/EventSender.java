@@ -1,6 +1,6 @@
 package com.springboot.cloud.nailservice.nail.events;
 
-import com.springboot.cloud.sysadmin.organization.config.BusConfig;
+import com.springboot.cloud.nailservice.nail.config.BusConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
