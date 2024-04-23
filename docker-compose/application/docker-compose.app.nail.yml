@@ -1,0 +1,16 @@
+version: '3'
+services:
+  nsclc:
+    image: cike/nail:latest
+    container_name: sc-nail-server
+    volumes:
+      - ./application/data/app/nail/server/datas:/app/server/datas
+      - ./application/data/app/nail/server/logs:/app/server/logs
+    restart: always
+    networks:
+      - sc-net
+    ports:
+      - "8457:8457"
+    env_file: .env
+    environment:
+      TZ: Asia/Shanghai
