@@ -50,6 +50,8 @@ public class FileServiceImpl implements IFileService {
         String diagnosisCode = MyStringsUtil.getUUID();
         //文件路径
         String imageFile_final = "";
+        // 设置序列号
+        int i = 1;
 
         for(MultipartFile imageFile : imageFiles){
             // 获取上传文件的原始文件名
@@ -63,7 +65,10 @@ public class FileServiceImpl implements IFileService {
                 File dest = new File(DATA_PATH);
                 dest.mkdirs();
                 // 生成新的文件名
-                String newFileName = getNewFileName(filename,getUserName());
+                String suffix = getFileSuffix(filename);
+                // 使用当前时间的时间戳和用户名作为文件名的一部分，保证文件名的唯一性
+                String newFileName = getUserName() + "_" + MyStringsUtil.getTimeSuffix() + "_" + i + suffix;
+                i = i+1;
                 // 构建文件保存路径
                 Path path = Paths.get(DATA_PATH, newFileName);
                 // 将上传的文件内容保存到指定路径下
@@ -71,7 +76,7 @@ public class FileServiceImpl implements IFileService {
                 // 生成文件路径
                 String filePath = DATA_PATH + "/" + newFileName;
                 imageFile_final += filePath + ",";
-            } catch (IOException | NullPointerException e) {
+            } catch (Exception e) {
                 // 如果保存文件时发生异常，记录错误日志，并抛出 FileSaveErrorException 异常
                 log.error(e.toString());
                 throw new FileSaveErrorException(e.getMessage());
@@ -125,15 +130,16 @@ public class FileServiceImpl implements IFileService {
      * @param filename 原始文件名
      * @return 添加时间戳后的新文件名
      */
-    private String getNewFileName(String filename, String username) {
-        // 获取文件的后缀名
-        String suffix = getFileSuffix(filename);
-        // 使用当前时间的时间戳和用户名作为文件名的一部分，保证文件名的唯一性
-        return username + "_" + MyStringsUtil.getTimeSuffix() + suffix;
-    }
+//    private String getNewFileName(String filename, String username) {
+//        // 获取文件的后缀名
+//        String suffix = getFileSuffix(filename);
+//        // 使用当前时间的时间戳和用户名作为文件名的一部分，保证文件名的唯一性
+//        return username + "_" + MyStringsUtil.getTimeSuffix() + suffix;
+//    }
 
     private String getUserName() {
-        return UserContextHolder.getInstance().getUsername();
+//        return UserContextHolder.getInstance().getUsername(); TODO
+        return "test_user";
     }
 
 

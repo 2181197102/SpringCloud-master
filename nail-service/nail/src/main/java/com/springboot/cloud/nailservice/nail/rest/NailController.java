@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
@@ -23,17 +24,25 @@ import javax.annotation.Resource;
 @Slf4j
 public class NailController {
     @Resource   // @Resource是J2EE提供的注解，由J2EE提供，而@Autowired是Spring提供的注解。
-                // @Resource默认按照名称进行装配，如果找不到与名称匹配的bean，则按照类型进行装配。
-                // @Resource有两个属性是比较重要的，分别是name和type，Spring将name属性解析为bean的名字，type属性解析为bean的类型。
+    // @Resource默认按照名称进行装配，如果找不到与名称匹配的bean，则按照类型进行装配。
+    // @Resource有两个属性是比较重要的，分别是name和type，Spring将name属性解析为bean的名字，type属性解析为bean的类型。
     private INailService nailService;
 
     @Resource
     private IFileService fileService;
 
+//    @ApiOperation(value = "上传图片", notes = "上传图片")
+//    @PostMapping("/file/upload/image")
+//    public Result uploadFileImage(UploadImageParam uploadImageParam) {
+//        UploadImageVo uploadImageVo = fileService.saveImage(uploadImageParam);
+//        return Result.success(uploadImageVo);
+//    }
+
     @ApiOperation(value = "上传图片", notes = "上传图片")
-    @PostMapping("/file/upload/image")
-    public Result uploadFileImage(UploadImageParam uploadImageParam) {
-        UploadImageVo uploadImageVo = fileService.saveImage(uploadImageParam);
+    @PostMapping(value = "/file/upload/image", consumes = "multipart/form-data")
+    public Result uploadFileImage(@RequestParam(value = "file") MultipartFile[] file) {
+        UploadImageParam tmp = new UploadImageParam(file);
+        UploadImageVo uploadImageVo = fileService.saveImage(tmp);
         return Result.success(uploadImageVo);
     }
 

@@ -18,8 +18,8 @@ public class NailDiagUpdateForm extends BaseForm<NailDiag> {
     @ApiModelProperty(value = "诊断编码")
     private String diagnosisCode;
 
-    @ApiModelProperty(value = "用户ID")
-    private String userId;
+    @ApiModelProperty(value = "诊断者姓名")
+    private String doctorName;
 
     @ApiModelProperty(value = "患者姓名")
     private String patientName;

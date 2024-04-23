@@ -23,7 +23,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2) // 指定文档类型使用Swagger2
                 .apiInfo(apiInfo()) // 调用下面的apiInfo函数，获取API的基本信息（如标题、描述、版本等）
                 .select()    // 返回一个ApiSelectorBuilder实例，用来控制哪些接口暴露给Swagger来展现
-                .apis(RequestHandlerSelectors.basePackage("com.springboot.cloud.nail-service.nail")) // 指定扫描的包路径来定义指定要建立API文档的控制器类或方法
+                .apis(RequestHandlerSelectors.basePackage("com.springboot.cloud.nailservice.nail")) // 指定扫描的包路径来定义指定要建立API文档的控制器类或方法
                 .paths(PathSelectors.any()) // 对所有路径进行监控
                 .build(); // 创建Docket实例
     }

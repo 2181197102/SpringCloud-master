@@ -15,9 +15,11 @@ public class MyStringsUtil {
      * @return 当前时间的时间戳，格式为yyyyMMddHHmmss
      */
     public static String getTimeSuffix() {
-        // 创建日期格式化对象，指定日期格式为yyyyMMddHHmmss
+//        // 创建日期格式化对象，指定日期格式为yyyyMMddHHmmss
+//        SimpleDateFormat sdf = new SimpleDateFormat();
+        // 创建日期格式化对象，指定日期格式为yyyyMMddHHmmssSSS（SSS表示毫秒）
         SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.applyPattern("yyyyMMddHHmmss");
+        sdf.applyPattern("yyyyMMddHHmmssSSS");
         // 获取当前时间
         Date date = new Date();
         // 格式化日期对象，并返回格式化后的字符串
