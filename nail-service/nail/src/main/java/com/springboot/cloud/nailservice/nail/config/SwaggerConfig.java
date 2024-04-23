@@ -23,7 +23,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2) // 指定文档类型使用Swagger2
                 .apiInfo(apiInfo()) // 调用下面的apiInfo函数，获取API的基本信息（如标题、描述、版本等）
                 .select()    // 返回一个ApiSelectorBuilder实例，用来控制哪些接口暴露给Swagger来展现
-                .apis(RequestHandlerSelectors.basePackage("com.springboot.cloud.sysadmin.organization")) // 指定扫描的包路径来定义指定要建立API文档的控制器类或方法
+                .apis(RequestHandlerSelectors.basePackage("com.springboot.cloud.nail-service.nail")) // 指定扫描的包路径来定义指定要建立API文档的控制器类或方法
                 .paths(PathSelectors.any()) // 对所有路径进行监控
                 .build(); // 创建Docket实例
     }
@@ -32,8 +32,8 @@ public class SwaggerConfig {
     // 这里可以自定义标题、描述、服务条款的URL、版本等信息
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("系统管理API") // 设置文档标题
-                .description("系统管理，组织人员管理、角色权限管理、岗位管理") // 设置文档描述
+                .title("甲病诊断API") // 设置文档标题
+                .description("接口测试") // 设置文档描述
                 .termsOfServiceUrl("https://github.com/zhoutaoo/SpringCloud") // 设置服务条款的URL
                 .version("2.0") // 设置文档版本号
                 .build(); // 构建ApiInfo实例
