@@ -12,17 +12,13 @@ import java.util.Set;
 // path: 服务提供者的服务路径
 // 通过@FeignClient注解的name属性指定服务提供者的服务名，path属性指定服务提供者的服务路径
 // 通过@GetMapping注解的value属性指定服务提供者的服务路径
-@FeignClient(name = "organization", path = "/user", fallback = UserClientFallback.class)
+@FeignClient(name = "organization")
 public interface UserClient {
-    // 声明需要调用的rest接口对应的方法
-
-    @GetMapping(value = "/{id}")
-    Result<User> getUserById(@PathVariable("id") String id);
-
-    @GetMapping
-    Result<User> getUserByUniqueId(@RequestParam("uniqueId") String uniqueId);
+    @GetMapping(value = "/user")
+    Result<User> getUserByUniqueId(@RequestParam("uniqueId") String userId);
 
 }
+
 
 
 /*

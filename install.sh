@@ -240,3 +240,18 @@ docker-compose -f ../docker-compose.yml -f docker-compose.app.nsclc.yml up -d ns
 
 cd -
 echo '代码发布上线了，你不想亲自进行发布验证吗，你不会是以为没有隐藏的bug吧？'
+
+
+echo '==================9.构建镜像并启动甲病诊断应用(nail)相关服务==============='
+
+cd ./nail-service/nail
+
+mvn package -U -D maven.test.skip=true && mvn docker:build -U -D maven.test.skip=true
+
+cd -
+
+cd docker-compose/application
+
+docker-compose -f ../docker-compose.yml -f docker-compose.app.nail.yml up -d nail
+
+cd -

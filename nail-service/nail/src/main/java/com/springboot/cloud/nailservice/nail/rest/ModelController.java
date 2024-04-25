@@ -19,10 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -54,6 +51,7 @@ public class ModelController {
 
 
     @PostMapping("/predict")
+    // TODO 入参不合理 不可以输入带引号的code,直接输入code才ok
     public Result predict(@RequestBody String diagnosisCode) throws IOException {
         return Result.success(predict_service(diagnosisCode));
     }
@@ -156,7 +154,8 @@ public class ModelController {
     }
 
     private String getUserName() {
-        return UserContextHolder.getInstance().getUsername();
+//        return UserContextHolder.getInstance().getUsername();TODO
+        return "test_patient_1";
     }
 
 

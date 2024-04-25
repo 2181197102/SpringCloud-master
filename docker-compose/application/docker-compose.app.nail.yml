@@ -1,6 +1,7 @@
 version: '3'
 services:
-  nsclc:
+  # 甲病诊断服务
+  nail:
     image: cike/nail:latest
     container_name: sc-nail-server
     volumes:

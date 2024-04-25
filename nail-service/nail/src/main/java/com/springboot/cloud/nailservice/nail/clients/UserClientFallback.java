@@ -9,8 +9,4 @@ public class UserClientFallback implements UserClient{
         return Result.success(new User());
     }
 
-    @Override
-    public Result<User> getUserById(String id) {
-        return Result.success(new User());
-    }
 }
