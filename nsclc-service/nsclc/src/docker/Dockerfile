@@ -18,7 +18,7 @@ RUN java -version && \
 #安装依赖包
 RUN pip3 install thrift pyradiomics scikit-learn joblib numpy pandas SimpleITK openpyxl
 
-# 设置工作目录
+# 设置工作目录docker
 WORKDIR /app
 RUN mkdir /app/server
 RUN mkdir /app/server/logs

@@ -258,11 +258,12 @@ cd -
 
 echo '==================10.构建镜像并启动甲病诊断接口(NailApp)相关服务==============='
 
-cd..
+cd ..
 
-cd NailApp
+cd NailApp/AppTest
 
-docker-compose -f docker-compose.yml up -d app
+# docker-compose -f docker-compose.yml up -d app
+docker-compose up -d --build
 
 cd -
 
