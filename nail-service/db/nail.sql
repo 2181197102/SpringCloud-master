@@ -12,7 +12,7 @@ CREATE TABLE tb_nail_diag
     diagnosis_code      VARCHAR(40)  NOT NULL COMMENT '诊断编码',
     doctor_name         VARCHAR(20)  NOT NULL COMMENT '诊断者姓名',
     patient_name        VARCHAR(20)  NOT NULL COMMENT '患者姓名',
-    image_file          VARCHAR(100) NOT NULL COMMENT '用户上传图片,存储图片url',
+    image_file          VARCHAR(450) NOT NULL COMMENT '用户上传图片,存储图片url',
     diag_result         VARCHAR(500) NOT NULL COMMENT '诊断结果',
     result_accuracy    INTEGER      NOT NULL COMMENT '诊断结果准确率,1：准确,0：不准确,-1：医生未评测',
     feed_back            VARCHAR(500) NOT NULL COMMENT '结果反馈',

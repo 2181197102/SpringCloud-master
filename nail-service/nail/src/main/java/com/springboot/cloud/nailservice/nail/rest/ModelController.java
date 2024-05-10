@@ -66,7 +66,7 @@ public class ModelController {
         // 已取消该设计，改为使用Redis存储图片路径
 
         // 请求地址
-        String postUrl = "http://localhost:5000/predict";
+        String postUrl = "http://nail-predict-model:5000/predict";
 
         // 从 Redis 中获取存储的值
         String imagePathString = redisTemplate.boundValueOps("diagnosisCode_imagePath_" + diagnosisCode).get();
@@ -133,6 +133,7 @@ public class ModelController {
         save.setDiagResult(predictVo.getDiagResult());
         save.setImageFile(redisTemplate.boundValueOps("diagnosisCode_imagePath_" + diagnosisCode).get());
         save.setDiagnosisCode(predictVo.getDiagnosisCode());
+        save.setFeedBack("");
         try {
             nailService.saveOneDiag(save);
         } catch (Exception e) {
