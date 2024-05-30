@@ -135,3 +135,8 @@ feign:
   #    enabled: true
   okhttp:
     enabled: true # 开启OKHttp功能
+
+wx:
+  appid: wxdae5e441bdf652c6
+  secret: cc7e7f74756a4c472c762241df24e281
+
