@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/wx")
 @Api("wx")
 @Slf4j
 public class WXController {
