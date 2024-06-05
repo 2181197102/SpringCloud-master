@@ -30,7 +30,7 @@ import java.util.Set;
 @Service    // @Service是Spring框架提供的一个注解，用于标注在类上，表示将该类定义为Spring容器中的一个服务组件（Service Component）。
             // 它是一个专门用于业务逻辑层（Business Service Layer）的注解，表明该类主要用于执行业务操作、事务处理等。
 @Slf4j      // @Slf4j是Lombok提供的一个注解，用于在类上生成一个log属性，用于记录日志。
-public class NailService extends ServiceImpl<NailDiagMapper, NailDiag> implements INailService {
+public class NailServiceImpl extends ServiceImpl<NailDiagMapper, NailDiag> implements INailService {
 
     @Resource
     private UserClient userClient;

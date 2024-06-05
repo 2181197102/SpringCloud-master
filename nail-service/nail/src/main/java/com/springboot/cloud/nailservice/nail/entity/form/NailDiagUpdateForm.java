@@ -34,5 +34,8 @@ public class NailDiagUpdateForm extends BaseForm<NailDiag> {
     private Integer resultAccuracy;
 
     @ApiModelProperty(value = "结果反馈")
-    private String feedback;
+    private String feedBack;
+
+    @ApiModelProperty(value = "微信小程序用户的openid")
+    private String openId;
 }

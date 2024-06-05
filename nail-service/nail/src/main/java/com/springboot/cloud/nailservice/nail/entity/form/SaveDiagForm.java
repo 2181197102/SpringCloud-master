@@ -4,6 +4,7 @@ package com.springboot.cloud.nailservice.nail.entity.form;
 
 import com.springboot.cloud.common.web.entity.form.BaseForm;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,5 +28,7 @@ public class SaveDiagForm extends BaseForm<NailDiag> {
 
     private Integer resultAccuracy;
 
-    private String feedback;
+    private String feedBack;
+
+    private String openId;
 }

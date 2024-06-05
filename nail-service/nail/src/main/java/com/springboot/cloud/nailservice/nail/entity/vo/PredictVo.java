@@ -11,4 +11,8 @@ public class PredictVo {
 
         private String diagResult;
 
+        private String openId;
+
+        private String patientName;
+
 }

@@ -3,6 +3,7 @@ package com.springboot.cloud.nailservice.nail.entity.param;
 
 import com.springboot.cloud.common.web.entity.param.BaseParam;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,6 @@ public class NailDiagQueryParam extends BaseParam<NailDiag> {
     private String patientName;
 
     private Integer resultAccuracy;
+
+    private String openId;
 }

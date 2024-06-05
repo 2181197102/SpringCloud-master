@@ -1,4 +1,5 @@
 package com.springboot.cloud.nailservice.nail.entity.po;
+
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.springboot.cloud.common.web.entity.po.BasePo;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_nail_diag")
-public class NailDiag extends BasePo{
+public class NailDiag extends BasePo {
 
     private String diagnosisCode;
 
@@ -27,6 +28,8 @@ public class NailDiag extends BasePo{
     private Integer resultAccuracy;
 
     private String feedBack;
+
+    private String openId;
 
     @TableLogic
     private String deleted = "N";

@@ -24,7 +24,7 @@ import java.io.IOException;
 @RestController
 @Api("wx")
 @Slf4j
-public class WXController {
+public class OpenIdController {
 
     @Value("${wx.appid}")
     private String appid;

@@ -17,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 public class NailDiagForm extends BaseForm<NailDiag> {
+
     @ApiModelProperty(value = "诊断编码")
     private String diagnosisCode;
 
@@ -36,5 +37,8 @@ public class NailDiagForm extends BaseForm<NailDiag> {
     private Integer resultAccuracy;
 
     @ApiModelProperty(value = "结果反馈")
-    private String feedback;
+    private String feedBack;
+
+    @ApiModelProperty(value = "微信小程序用户的openid")
+    private String openId;
 }

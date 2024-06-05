@@ -32,6 +32,9 @@ public class NailDiagQueryForm extends BaseQueryForm<NailDiagQueryParam> {
     @ApiModelProperty(value = "诊断结果准确率，1：准确, 0：不准确")
     private Integer resultAccuracy;
 
+    @ApiModelProperty(value = "微信小程序用户的openid")
+    private String openId;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Past(message = "查询开始时间必须小于当前日期")
     @ApiModelProperty(value = "查询开始时间")
