@@ -31,7 +31,16 @@ public class WxxcxController {
     @PostMapping("/fuzzy-query")
     public Result<IPage<NailDiag>> fuzzyQuery(@RequestBody NailDiagQueryForm nailDiagQueryForm) {
         log.debug("query with conditions:{}", nailDiagQueryForm);
-        return Result.success(wxxcxService.fuzzyQuery(nailDiagQueryForm.getPage(), nailDiagQueryForm.toParam(NailDiagQueryParam.class)));
+        Page<NailDiag> page = nailDiagQueryForm.getPage();
+
+        // 设置分页参数的默认值
+        if (page.getCurrent() == 0) {
+            page.setCurrent(1); // 默认当前页为1
+        }
+        if (page.getSize() == 0) {
+            page.setSize(30); // 默认每页显示100条记录
+        }
+        return Result.success(wxxcxService.fuzzyQuery(page, nailDiagQueryForm.toParam(NailDiagQueryParam.class)));
     }
 
 

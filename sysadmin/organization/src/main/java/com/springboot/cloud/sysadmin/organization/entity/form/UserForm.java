@@ -27,13 +27,13 @@ public class UserForm extends BaseForm<User> {
                                           // 通过这个注解，可以为模型属性提供额外的信息，使得生成的API文档更加清晰、易于理解。
     @NotBlank(message = "用户名不能为空")  // @NotBlank注解是由Hibernate Validator提供的，用于验证字符串是否为null或空字符串。
                                         // 如果被注解的字符串为null或空字符串，那么验证不通过，会抛出ConstraintViolationException异常。
-    @Length(min = 3, max = 20, message = "用户名长度在3到20个字符")   // @Length注解是由Hibernate Validator提供的，用于验证字符串的长度是否在指定的范围内。
+    @Length(min = 3, max = 100, message = "用户名长度在3到100个字符")   // @Length注解是由Hibernate Validator提供的，用于验证字符串的长度是否在指定的范围内。
                                                                   // 如果被注解的字符串长度不在指定的范围内，那么验证不通过，会抛出ConstraintViolationException异常。
     private String username;
 
     @ApiModelProperty(value = "用户密码")
     @NotBlank(message = "用户密码不能为空")
-    @Length(min = 5, max = 20, message = "密码长度在5到20个字符")
+    @Length(min = 5, max = 100, message = "密码长度在5到100个字符")
     private String password;
 
     @ApiModelProperty(value = "用户手机号")

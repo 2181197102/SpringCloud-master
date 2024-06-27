@@ -51,7 +51,8 @@ public class ModelServiceImpl implements IModelService {
         String patientName = predictParam.getPatientName();
 
         // 请求地址
-        String postUrl = "http://nail-predict-model:5000/predict";
+//        String postUrl = "http://nail-predict-model:5000/predict";
+        String postUrl = "http://localhost:5000/predict";
 
         // 从 Redis 中获取存储的值
         String imagePathString = redisTemplate.boundValueOps("diagnosisCode_imagePath_" + diagnosisCode).get();
@@ -106,6 +107,7 @@ public class ModelServiceImpl implements IModelService {
 
     private void insertPatient(PredictVo predictVo) {
         NailDiag save = new NailDiag();
+        save.setOpenId(predictVo.getOpenId());
         save.setDoctorName(verifyUserRolePatient(predictVo.getOpenId()) ? "患者角色_自测" : "医生角色_自测");
         save.setPatientName(predictVo.getPatientName());
         save.setResultAccuracy(-1);

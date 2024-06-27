@@ -16,19 +16,29 @@ public class WxxcxServiceImpl extends ServiceImpl<NailDiagMapper, NailDiag>  imp
 
     // 其他方法实现
 
+    // 模糊查询
     @Override
     public IPage<NailDiag> fuzzyQuery(Page page, NailDiagQueryParam queryParam) {
         LambdaQueryWrapper<NailDiag> lqw = new LambdaQueryWrapper<>();
 
         // 固定参数openId
-        lqw.eq(NailDiag::getOpenId, queryParam.getOpenId());
+        if (StringUtils.isNotBlank(queryParam.getOpenId())) {
+            lqw.eq(NailDiag::getOpenId, queryParam.getOpenId());
+        }
 
         // 可选模糊查询参数
-        lqw.like(StringUtils.isNotBlank(queryParam.getDiagnosisCode()), NailDiag::getDiagnosisCode, queryParam.getDiagnosisCode());
-        lqw.like(StringUtils.isNotBlank(queryParam.getDoctorName()), NailDiag::getDoctorName, queryParam.getDoctorName());
-        lqw.like(StringUtils.isNotBlank(queryParam.getPatientName()), NailDiag::getPatientName, queryParam.getPatientName());
-//      lqw.eq(queryParam.getResultAccuracy() != null, NailDiag::getResultAccuracy, queryParam.getResultAccuracy());
-        lqw.eq(verify(queryParam.getResultAccuracy()), NailDiag::getResultAccuracy, queryParam.getResultAccuracy());
+        if (StringUtils.isNotBlank(queryParam.getDiagnosisCode())) {
+            lqw.like(NailDiag::getDiagnosisCode, queryParam.getDiagnosisCode());
+        }
+        if (StringUtils.isNotBlank(queryParam.getDoctorName())) {
+            lqw.like(NailDiag::getDoctorName, queryParam.getDoctorName());
+        }
+        if (StringUtils.isNotBlank(queryParam.getPatientName())) {
+            lqw.like(NailDiag::getPatientName, queryParam.getPatientName());
+        }
+        if (verify(queryParam.getResultAccuracy())) {
+            lqw.eq(NailDiag::getResultAccuracy, queryParam.getResultAccuracy());
+        }
         IPage<NailDiag> retPage = this.page(page, lqw);
         return retPage;
     }

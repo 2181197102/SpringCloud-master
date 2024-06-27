@@ -1,6 +1,7 @@
 package com.springboot.cloud.nailservice.nail.service;
 
 import com.springboot.cloud.nailservice.nail.entity.param.NailDiagQueryParam;
+import com.springboot.cloud.nailservice.nail.entity.pojo.User;
 import com.springboot.cloud.nailservice.nail.entity.vo.PredictVo;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
 import com.baomidou.mybatisplus.core.metadata.IPage;
