@@ -94,7 +94,24 @@ public class ModelServiceImpl implements IModelService {
             // 从 jsonObject 中提取 mostLikelyClass 的信息
             String mostLikelyClass = jsonObject.get("most_likely_class").getAsString();
 
-            String diagResult = mostLikelyClass;
+//            String diagResult = mostLikelyClass;
+
+            // 进行中英文对照
+            // ['Psoriatic Nails', 'Paronychia', 'Nail Matrix Nevus', 'Subungual Melanoma', 'Melanonychia', ' Periungual Warts', 'Onychomycosis']
+            // ['银屑病甲', '甲沟炎', '甲母痣', '甲黑素瘤', '甲黑线', ' 甲周疣', '甲真菌病']
+            Map<String, String> diagnosisMap = new HashMap<>();
+            diagnosisMap.put("Psoriatic Nails", "银屑病甲");
+            diagnosisMap.put("Paronychia", "甲沟炎");
+            diagnosisMap.put("Nail Matrix Nevus", "甲母痣");
+            diagnosisMap.put("Subungual Melanoma", "甲黑素瘤");
+            diagnosisMap.put("Melanonychia", "甲黑线");
+            diagnosisMap.put("Periungual Warts", "甲周疣");
+            diagnosisMap.put("Onychomycosis", "甲真菌病");
+
+            String diagResult = diagnosisMap.getOrDefault(mostLikelyClass, "未知诊断结果");
+
+
+
 
             // 处理返回的信息
             PredictVo predictVo = new PredictVo(diagnosisCode, diagResult, openId, patientName);

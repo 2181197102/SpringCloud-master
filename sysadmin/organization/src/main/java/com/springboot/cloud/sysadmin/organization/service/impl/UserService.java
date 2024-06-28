@@ -116,6 +116,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
                 .eq("mobile", uniqueId));
         if (Objects.isNull(user)) {
             throw new UserNotFoundException("user not found with uniqueId:" + uniqueId);
+//            return user;
         }
         Set<String> roleIds = userRoleService.queryByUserId(user.getId());
         HashSet<String> roles = new HashSet<>();

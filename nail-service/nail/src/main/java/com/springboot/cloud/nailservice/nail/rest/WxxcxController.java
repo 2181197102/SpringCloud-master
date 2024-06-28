@@ -3,6 +3,7 @@ package com.springboot.cloud.nailservice.nail.rest;
 import com.springboot.cloud.common.core.entity.vo.Result;
 import com.springboot.cloud.nailservice.nail.entity.form.NailDiagQueryForm;
 import com.springboot.cloud.nailservice.nail.entity.param.NailDiagQueryParam;
+import com.springboot.cloud.nailservice.nail.entity.param.RegisterParam;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
 import com.springboot.cloud.nailservice.nail.service.IWxxcxService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/wxxcx")
@@ -42,6 +44,21 @@ public class WxxcxController {
         }
         return Result.success(wxxcxService.fuzzyQuery(page, nailDiagQueryForm.toParam(NailDiagQueryParam.class)));
     }
+
+    @ApiOperation(value = "用户注册", notes = "根据提供的注册信息注册一个新用户")
+    @PostMapping("/register")
+    public Result register(@Valid @RequestBody RegisterParam registerParam) {
+        log.debug("Registering user with information: {}", registerParam);
+
+        boolean isRegistered = wxxcxService.register(registerParam);
+
+        if (isRegistered) {
+            return Result.success("User registered successfully");
+        } else {
+            return Result.fail("User registration failed");
+        }
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.springboot.cloud.nailservice.nail.service;
 
 import com.springboot.cloud.nailservice.nail.entity.param.NailDiagQueryParam;
+import com.springboot.cloud.nailservice.nail.entity.param.RegisterParam;
 import com.springboot.cloud.nailservice.nail.entity.pojo.User;
 import com.springboot.cloud.nailservice.nail.entity.vo.PredictVo;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
@@ -17,4 +18,7 @@ public interface IWxxcxService {
 
 //    // 定义更新诊断_微信小程序专属方法
 //    boolean update(NailDiag nailDiag);
+
+    // 定义用户注册方法
+    boolean register(RegisterParam registerParam);
 }
