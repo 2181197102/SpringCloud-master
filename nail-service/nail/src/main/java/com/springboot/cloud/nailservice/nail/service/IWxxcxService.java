@@ -14,7 +14,7 @@ public interface IWxxcxService {
     // 其他方法签名
 
     // 定义模糊查询方法
-    IPage<NailDiag> fuzzyQuery(Page page, NailDiagQueryParam queryParam);
+    IPage<NailDiag> fuzzyQuery(Page<NailDiag> page, NailDiagQueryParam queryParam);
 
 //    // 定义更新诊断_微信小程序专属方法
 //    boolean update(NailDiag nailDiag);

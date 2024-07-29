@@ -1,13 +1,16 @@
 package com.springboot.cloud.nailservice.nail.entity.form;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboot.cloud.common.web.entity.form.BaseQueryForm;
 import com.springboot.cloud.nailservice.nail.entity.param.NailDiagQueryParam;
+import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Past;
@@ -45,4 +48,15 @@ public class NailDiagQueryForm extends BaseQueryForm<NailDiagQueryParam> {
     @ApiModelProperty(value = "查询结束时间")
     private Date createdTimeEnd;
 
+    // 获取分页对象
+    public Page<NailDiag> getPage() {
+        return new Page<>(getCurrent(), getSize());
+    }
+
+    // 转换为查询参数对象
+    public NailDiagQueryParam toParam(Class<NailDiagQueryParam> clazz) {
+        NailDiagQueryParam param = new NailDiagQueryParam();
+        BeanUtils.copyProperties(this, param);
+        return param;
+    }
 }

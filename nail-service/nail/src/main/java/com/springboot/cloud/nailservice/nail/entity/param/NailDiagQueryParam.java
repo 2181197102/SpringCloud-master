@@ -4,6 +4,7 @@ package com.springboot.cloud.nailservice.nail.entity.param;
 import com.springboot.cloud.common.web.entity.param.BaseParam;
 import com.springboot.cloud.nailservice.nail.entity.po.NailDiag;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,8 @@ public class NailDiagQueryParam extends BaseParam<NailDiag> {
     private Integer resultAccuracy;
 
     private String openId;
+
+    private Date createdTimeStart;
+
+    private Date createdTimeEnd;
 }

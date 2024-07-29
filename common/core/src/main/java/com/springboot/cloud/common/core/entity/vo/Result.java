@@ -8,10 +8,12 @@ import com.springboot.cloud.common.core.exception.SystemErrorType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ApiModel(description = "rest请求的返回模型，所有rest正常都返回该类的对象")
 @Data
@@ -29,6 +31,9 @@ public class Result<T> {
     @ApiModelProperty(value = "处理结果数据信息")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
+    @ApiModelProperty(value = "分页信息")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Map<String, Object> pageInfo;
 
     public Result() {
         this.time = ZonedDateTime.now().toInstant();
@@ -72,8 +77,27 @@ public class Result<T> {
      * @param data
      * @return Result
      */
-    public static Result success(Object data) {
+    public static <T> Result<T> success(T data) {
         return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
+    }
+
+    /**
+     * 快速创建成功结果并返回分页信息
+     *
+     * @param data
+     * @param currentPage 当前页
+     * @param pageSize 每页记录数
+     * @param total 总记录数
+     * @return Result
+     */
+    public static <T> Result<List<T>> successWithPage(List<T> data, long currentPage, long pageSize, long total) {
+        Result<List<T>> result = new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
+        Map<String, Object> pageInfo = new HashMap<>();
+        pageInfo.put("currentPage", currentPage);
+        pageInfo.put("pageSize", pageSize);
+        pageInfo.put("total", total);
+        result.setPageInfo(pageInfo);
+        return result;
     }
 
     /**
@@ -81,7 +105,7 @@ public class Result<T> {
      *
      * @return Result
      */
-    public static Result success() {
+    public static <T> Result<T> success() {
         return success(null);
     }
 
@@ -90,8 +114,8 @@ public class Result<T> {
      *
      * @return Result
      */
-    public static Result fail() {
-        return new Result(SystemErrorType.SYSTEM_ERROR);
+    public static <T> Result<T> fail() {
+        return new Result<>(SystemErrorType.SYSTEM_ERROR);
     }
 
     /**
@@ -100,7 +124,7 @@ public class Result<T> {
      * @param baseException
      * @return Result
      */
-    public static Result fail(BaseException baseException) {
+    public static <T> Result<T> fail(BaseException baseException) {
         return fail(baseException, null);
     }
 
@@ -110,7 +134,7 @@ public class Result<T> {
      * @param data
      * @return Result
      */
-    public static Result fail(BaseException baseException, Object data) {
+    public static <T> Result<T> fail(BaseException baseException, T data) {
         return new Result<>(baseException.getErrorType(), data);
     }
 
@@ -121,7 +145,7 @@ public class Result<T> {
      * @param data
      * @return Result
      */
-    public static Result fail(ErrorType errorType, Object data) {
+    public static <T> Result<T> fail(ErrorType errorType, T data) {
         return new Result<>(errorType, data);
     }
 
@@ -131,7 +155,7 @@ public class Result<T> {
      * @param errorType
      * @return Result
      */
-    public static Result fail(ErrorType errorType) {
+    public static <T> Result<T> fail(ErrorType errorType) {
         return Result.fail(errorType, null);
     }
 
@@ -141,10 +165,9 @@ public class Result<T> {
      * @param data
      * @return Result
      */
-    public static Result fail(Object data) {
+    public static <T> Result<T> fail(T data) {
         return new Result<>(SystemErrorType.SYSTEM_ERROR, data);
     }
-
 
     /**
      * 成功code=000000

@@ -15,7 +15,4 @@ public class RegisterParam {
     private String nickName;
 
     private String userType;
-
-    private String phoneNum;
-
 }

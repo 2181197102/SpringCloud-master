@@ -38,8 +38,11 @@ public class WxxcxServiceImpl extends ServiceImpl<NailDiagMapper, NailDiag>  imp
     // 其他方法实现
 
     // 模糊查询
+    @Autowired
+    private NailDiagMapper nailDiagMapper;
+
     @Override
-    public IPage<NailDiag> fuzzyQuery(Page page, NailDiagQueryParam queryParam) {
+    public IPage<NailDiag> fuzzyQuery(Page<NailDiag> page, NailDiagQueryParam queryParam) {
         LambdaQueryWrapper<NailDiag> lqw = new LambdaQueryWrapper<>();
 
         // 固定参数openId
@@ -60,10 +63,17 @@ public class WxxcxServiceImpl extends ServiceImpl<NailDiagMapper, NailDiag>  imp
         if (verify(queryParam.getResultAccuracy())) {
             lqw.eq(NailDiag::getResultAccuracy, queryParam.getResultAccuracy());
         }
-        IPage<NailDiag> retPage = this.page(page, lqw);
-        return retPage;
-    }
 
+        if (queryParam.getCreatedTimeStart() != null) {
+            lqw.ge(NailDiag::getCreatedTime, queryParam.getCreatedTimeStart());
+        }
+        if (queryParam.getCreatedTimeEnd() != null) {
+            lqw.le(NailDiag::getCreatedTime, queryParam.getCreatedTimeEnd());
+        }
+
+        // 执行分页查询
+        return nailDiagMapper.selectPage(page, lqw);
+    }
 
     private boolean verify(Integer result) {
         return result != null && result != -1;
@@ -76,7 +86,6 @@ public class WxxcxServiceImpl extends ServiceImpl<NailDiagMapper, NailDiag>  imp
         String openid = registerParam.getOpenId();
         String nickname = registerParam.getNickName();
         String usertype = registerParam.getUserType();
-        String phonenum = registerParam.getPhoneNum();
         Set<String> roleids = Objects.equals(usertype, "1") ? Collections.singleton("102") : Collections.singleton("103");
 
         Result<User> user = userClient.getUserByUniqueId(openid);
@@ -90,7 +99,6 @@ public class WxxcxServiceImpl extends ServiceImpl<NailDiagMapper, NailDiag>  imp
             wx_user.setName(nickname);
             wx_user.setUsername(openid);
             wx_user.setPassword(openid);
-            wx_user.setMobile(phonenum);
             wx_user.setRoleIds(roleids);
             wx_user.setUsertype(usertype);
 

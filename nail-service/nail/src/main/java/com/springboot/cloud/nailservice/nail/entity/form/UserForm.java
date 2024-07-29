@@ -38,8 +38,8 @@ public class UserForm extends BaseForm<User> {
     private String password;
 
     @ApiModelProperty(value = "用户手机号")
-    @NotBlank(message = "用户手机号不能为空")
-    private String mobile;
+//    @NotBlank(message = "用户手机号不能为空")
+    private String mobile = null;
 
     @ApiModelProperty(value = "用户姓名")
     @NotBlank(message = "用户姓名不能为空")
