@@ -1,5 +1,6 @@
 package com.springboot.cloud.nailservice.nail.service.impl;
 
+import com.springboot.cloud.common.core.util.UserContextHolder;
 import com.springboot.cloud.nailservice.nail.entity.param.UploadImageParam;
 import com.springboot.cloud.nailservice.nail.entity.vo.UploadImageVo;
 import com.springboot.cloud.nailservice.nail.exception.FileSaveErrorException;
@@ -30,7 +31,7 @@ public class FileServiceImpl implements IFileService {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public UploadImageVo saveImage(UploadImageParam uploadImageParam) {
+    public UploadImageVo saveImage(UploadImageParam uploadImageParam, String openId) {
         // 从参数对象中获取上传的图片文件
         MultipartFile[] imageFiles = uploadImageParam.getFile();
         // 生成诊断编码
@@ -53,8 +54,8 @@ public class FileServiceImpl implements IFileService {
                 dest.mkdirs();
                 // 生成新的文件名
                 String suffix = getFileSuffix(filename);
-                // 使用当前时间的时间戳和用户名作为文件名的一部分，保证文件名的唯一性
-                String newFileName = getUserName() + "_" + MyStringsUtil.getTimeSuffix() + "_" + i + suffix;
+                // 使用当前时间的时间戳和 openId 作为文件名的一部分，保证文件名的唯一性
+                String newFileName = openId + "_" + MyStringsUtil.getTimeSuffix() + "_" + i + suffix;
                 i++;
                 // 构建文件保存路径
                 Path path = Paths.get(DATA_PATH, newFileName);
@@ -114,10 +115,5 @@ public class FileServiceImpl implements IFileService {
             return "";
         }
         return fileName.substring(number).toLowerCase();
-    }
-
-    private String getUserName() {
-        // return UserContextHolder.getInstance().getUsername(); TODO
-        return "test_user";
     }
 }

@@ -40,9 +40,10 @@ public class NailController {
 
     @ApiOperation(value = "上传图片", notes = "上传图片")
     @PostMapping(value = "/file/upload/image", consumes = "multipart/form-data")
-    public Result uploadFileImage(@RequestParam(value = "file") MultipartFile[] file) {
+    public Result uploadFileImage(@RequestParam(value = "file") MultipartFile[] file,
+                                  @RequestHeader("X-OpenId") String openId) {
         UploadImageParam tmp = new UploadImageParam(file);
-        UploadImageVo uploadImageVo = fileService.saveImage(tmp);
+        UploadImageVo uploadImageVo = fileService.saveImage(tmp, openId);
         return Result.success(uploadImageVo);
     }
 
