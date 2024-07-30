@@ -15,4 +15,6 @@ public class PredictVo {
 
         private String patientName;
 
+        private String userType;
+
 }

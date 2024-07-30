@@ -28,8 +28,8 @@
     import java.util.stream.Collectors;
 
     @RestController
-    @RequestMapping("/wxxcx")
-    @Api("wxxcx")
+    @RequestMapping("/nail/wxxcx")
+    @Api("nail/wxxcx")
     @Slf4j
     public class WxxcxController {
 

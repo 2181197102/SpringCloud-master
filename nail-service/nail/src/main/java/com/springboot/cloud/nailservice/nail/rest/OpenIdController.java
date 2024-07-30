@@ -33,7 +33,7 @@ public class OpenIdController {
     private String secret;
 
     @ResponseBody
-    @RequestMapping("/testopenid")
+    @RequestMapping("/nail/fetchopenid")
     public ResponseEntity<String> getUserInfo(@RequestParam(name = "code") String code) {
         String url = "https://api.weixin.qq.com/sns/jscode2session";
         url += "?appid=" + appid;

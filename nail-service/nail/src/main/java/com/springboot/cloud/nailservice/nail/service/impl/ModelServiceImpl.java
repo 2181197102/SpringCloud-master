@@ -49,6 +49,7 @@ public class ModelServiceImpl implements IModelService {
         String diagnosisCode = predictParam.getDiagnosisCode();
         String openId = predictParam.getOpenId();
         String patientName = predictParam.getPatientName();
+        String userType = predictParam.getUserType();
 
         // 请求地址
         String postUrl = "http://nail-predict-model:5000/predict";
@@ -114,7 +115,7 @@ public class ModelServiceImpl implements IModelService {
 
 
             // 处理返回的信息
-            PredictVo predictVo = new PredictVo(diagnosisCode, diagResult, openId, patientName);
+            PredictVo predictVo = new PredictVo(diagnosisCode, diagResult, openId, patientName,userType);
             insertPatient(predictVo);
             return predictVo;
         } else {
@@ -125,7 +126,8 @@ public class ModelServiceImpl implements IModelService {
     private void insertPatient(PredictVo predictVo) {
         NailDiag save = new NailDiag();
         save.setOpenId(predictVo.getOpenId());
-        save.setDoctorName(verifyUserRolePatient(predictVo.getOpenId()) ? "患者角色_自测" : "医生角色_自测");
+//        save.setDoctorName(verifyUserRolePatient(predictVo.getOpenId()) ? "患者角色_自测" : "医生角色_自测");  暂时不使用数据库中的角色来对用户分角色
+        save.setDoctorName(Objects.equals(predictVo.getUserType(), "0") ? "患者角色_自测" : "医生角色_自测");  // 而是使用前端传递的getUserType来区分这一字段的设置
         save.setPatientName(predictVo.getPatientName());
         save.setResultAccuracy(-1);
         save.setDiagResult(predictVo.getDiagResult());

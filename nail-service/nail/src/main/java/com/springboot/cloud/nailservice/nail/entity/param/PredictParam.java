@@ -17,4 +17,6 @@ public class PredictParam {
 
     private String patientName;
 
+    private String userType;
+
 }
