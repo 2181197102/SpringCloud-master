@@ -1,5 +1,6 @@
 package com.springboot.cloud.nailservice.nail.entity.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.springboot.cloud.common.web.entity.po.BasePo;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -21,7 +24,10 @@ public class NailDiag extends BasePo {
 
     private String patientName;
 
-    private String imageFile;
+    private String imageFile; // 原始的图片文件路径字符串
+
+    @TableField(exist = false)
+    private List<String> imageFiles; // 解析后的图片文件路径列表，不映射到数据库
 
     private String diagResult;
 

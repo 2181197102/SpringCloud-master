@@ -51,8 +51,8 @@ public class ModelServiceImpl implements IModelService {
         String patientName = predictParam.getPatientName();
 
         // 请求地址
-//        String postUrl = "http://nail-predict-model:5000/predict";
-        String postUrl = "http://localhost:5000/predict";
+        String postUrl = "http://nail-predict-model:5000/predict";
+//        String postUrl = "http://localhost:5000/predict";
 
         // 从 Redis 中获取存储的值
         String imagePathString = redisTemplate.boundValueOps("diagnosisCode_imagePath_" + diagnosisCode).get();
